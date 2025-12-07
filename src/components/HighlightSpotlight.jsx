@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Heart, Users, Sparkles } from 'lucide-react';
+import DetailModal from './DetailModal';
 import '../css/highlights.css';
 
 const highlights = [
@@ -30,9 +31,27 @@ const highlights = [
 ];
 
 export default function HighlightSpotlight() {
+  const [selectedResource, setSelectedResource] = useState(null);
+
+  const handleLearnMore = (highlight) => {
+    const resource = {
+      id: highlight.id,
+      name: highlight.title,
+      category: highlight.color || 'community',
+      description: highlight.description,
+      phone: '(555) 555-5555',
+      email: 'info@placeholder.local',
+      address: '123 Service Street, Coppell, TX 75019',
+      hours: 'Mon-Fri 9AM-5PM',
+      website: 'example.org',
+    };
+    setSelectedResource(resource);
+  };
+
   return (
-    <section id="highlights" className="highlights-section">
-      <div className="highlights-container">
+    <>
+      <section id="highlights" className="highlights-section">
+        <div className="highlights-container">
         <div className="highlights-header">
           <h2>Featured Community Resources</h2>
           <p>
@@ -53,7 +72,10 @@ export default function HighlightSpotlight() {
                 </div>
                 <h3>{highlight.title}</h3>
                 <p>{highlight.description}</p>
-                <button className={`highlight-btn highlight-btn-${highlight.color}`}>
+                <button
+                  onClick={() => handleLearnMore(highlight)}
+                  className={`highlight-btn highlight-btn-${highlight.color}`}
+                >
                   Learn More
                 </button>
               </div>
@@ -82,5 +104,10 @@ export default function HighlightSpotlight() {
         </div>
       </div>
     </section>
+
+      {selectedResource && (
+        <DetailModal resource={selectedResource} onClose={() => setSelectedResource(null)} />
+      )}
+    </>
   );
 }
