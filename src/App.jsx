@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ResourceDirectory from './components/ResourceDirectory';
 import { ResourceProvider } from './context/ResourceContext';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 export default function App() {
   return (

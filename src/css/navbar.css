@@ -1,3 +1,24 @@
-.navbar { background: #fff; padding: 15px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.1); position: fixed; width: 100%; top: 0; }
+.navbar { background: #D2B48C; padding: 15px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.1); position: fixed; width: 100%; top: 0; }
 .navbar-inner { width: 90%; margin: auto; display: flex; justify-content: space-between; align-items: center; }
 .navbar nav a { margin-left: 15px; text-decoration: none; color: #333; }
+
+.navbar-button {
+    background-color: transparent;
+  color: black;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 23px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+}
+
+.navbar-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.navbar-button:active {
+  transform: translateY(0);
+}
