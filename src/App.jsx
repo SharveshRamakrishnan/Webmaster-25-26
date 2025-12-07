@@ -16,10 +16,10 @@ export default function App() {
       <PopularCategories />
       <ResourceDirectory />
       <EventsStrip />
+      <HighlightSpotlight />
       <section id="submit-resource">
         <ResourceForm />
       </section>
-      <HighlightSpotlight />
       <Footer />
     </ResourceProvider>
   );

@@ -15,7 +15,7 @@ export default function Hero() {
     };
 
     return (
-        <section id="home" className="hero-section">
+        <section id="hero" className="hero-section">
             {/* Background Image with Overlay */}
             <div className="hero-background">
                 <img
