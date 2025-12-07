@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Heart, GraduationCap, Users, Calendar, HandHeart, Leaf, Building2, MoreHorizontal, MapPin } from 'lucide-react';
 import DetailModal from './DetailModal';
 import '../css/directory.css';
@@ -35,6 +35,16 @@ export default function ResourceDirectory() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedResource, setSelectedResource] = useState(null);
 
+  useEffect(() => {
+    const handleCategorySelected = (event) => {
+      const categoryId = event.detail.categoryId;
+      setSelectedCategory(categoryId);
+    };
+
+    window.addEventListener('categorySelected', handleCategorySelected);
+    return () => window.removeEventListener('categorySelected', handleCategorySelected);
+  }, []);
+
   const filteredResources = mockResources
     .filter(resource => selectedCategory === 'all' || resource.category === selectedCategory)
     .filter(resource => 
@@ -43,8 +53,15 @@ export default function ResourceDirectory() {
       resource.description.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .sort((a, b) => {
-      if (sortBy === 'name') return a.name.localeCompare(b.name);
-      if (sortBy === 'category') return a.category.localeCompare(b.category);
+      if (sortBy === 'name') {
+        return a.name.localeCompare(b.name);
+      }
+      if (sortBy === 'category') {
+        return a.category.localeCompare(b.category);
+      }
+      if (sortBy === 'newest') {
+        return b.id - a.id;
+      }
       return 0;
     });
 
@@ -102,6 +119,7 @@ export default function ResourceDirectory() {
             >
               <option value="name">Sort by Name</option>
               <option value="category">Sort by Category</option>
+              <option value="newest">Sort by Newest</option>
             </select>
           </div>
 

@@ -3,17 +3,30 @@ import { Heart, GraduationCap, HandHeart, Calendar, Users, Leaf, Building2, Home
 import '../css/categories.css';
 
 const categories = [
-  { id: 1, name: 'Health', icon: Heart, color: 'rose-pink' },
-  { id: 2, name: 'Education', icon: GraduationCap, color: 'blue-cyan' },
-  { id: 3, name: 'Volunteering', icon: HandHeart, color: 'orange-amber' },
-  { id: 4, name: 'Events', icon: Calendar, color: 'purple-pink' },
-  { id: 5, name: 'Support', icon: Users, color: 'green-emerald' },
-  { id: 6, name: 'Recreation', icon: Leaf, color: 'teal-cyan' },
-  { id: 7, name: 'Nonprofits', icon: Building2, color: 'indigo-blue' },
-  { id: 8, name: 'Housing', icon: Home, color: 'red-orange' },
+  { id: 1, name: 'Health', categoryId: 'health', icon: Heart, color: 'rose-pink' },
+  { id: 2, name: 'Education', categoryId: 'education', icon: GraduationCap, color: 'blue-cyan' },
+  { id: 3, name: 'Volunteering', categoryId: 'volunteering', icon: HandHeart, color: 'orange-amber' },
+  { id: 4, name: 'Events', categoryId: 'events', icon: Calendar, color: 'purple-pink' },
+  { id: 5, name: 'Support', categoryId: 'support', icon: Users, color: 'green-emerald' },
+  { id: 6, name: 'Recreation', categoryId: 'recreation', icon: Leaf, color: 'teal-cyan' },
+  { id: 7, name: 'Nonprofits', categoryId: 'nonprofits', icon: Building2, color: 'indigo-blue' },
+  { id: 8, name: 'Housing', categoryId: 'housing', icon: Home, color: 'red-orange' },
 ];
 
 export default function PopularCategories() {
+  const handleCategoryClick = (categoryId) => {
+    // Dispatch a custom event with the category
+    window.dispatchEvent(new CustomEvent('categorySelected', { detail: { categoryId } }));
+    
+    // Scroll to the directory section
+    const directorySection = document.getElementById('directory');
+    if (directorySection) {
+      setTimeout(() => {
+        directorySection.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
+    }
+  };
+
   return (
     <section id="categories" className="popular-categories-section">
       <div className="categories-container">
@@ -28,6 +41,7 @@ export default function PopularCategories() {
             return (
               <button
                 key={category.id}
+                onClick={() => handleCategoryClick(category.categoryId)}
                 className={`category-button category-${category.color}`}
               >
                 <div className="category-icon-wrapper">

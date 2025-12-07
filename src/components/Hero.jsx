@@ -4,14 +4,17 @@ import '../css/hero.css';
 
 export default function Hero() {
     const handleExploreClick = () => {
-        const resourceSection = document.getElementById('resources');
+        const resourceSection = document.getElementById('directory');
         if (resourceSection) {
             resourceSection.scrollIntoView({ behavior: 'smooth' });
         }
     };
 
     const handleSubmitClick = () => {
-        window.location.href = '/submit';
+        const submitSection = document.getElementById('submit-resource');
+        if (submitSection) {
+            submitSection.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     return (

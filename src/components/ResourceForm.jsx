@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import '../css/resourceForm.css';
 export default function ResourceForm(){
   const [formData, setFormData] = useState({firstName: '', lastName: '', resourceName: '', website: '', category: '', description: ''});
