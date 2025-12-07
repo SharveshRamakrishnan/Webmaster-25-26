@@ -15,7 +15,7 @@ const categories = [
 
 export default function PopularCategories() {
   return (
-    <section className="popular-categories-section">
+    <section id="categories" className="popular-categories-section">
       <div className="categories-container">
         <div className="categories-header">
           <h3>Popular Categories</h3>

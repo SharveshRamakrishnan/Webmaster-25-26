@@ -3,12 +3,14 @@ import { Menu, X } from 'lucide-react';
 import '../css/navbar.css';
 
 const navLinks = [
-  { label: 'Home', href: '#home' },
+  { label: 'Home', href: '#hero' },
   { label: 'Categories', href: '#categories' },
-  { label: 'Resources', href: '#resources' },
+  { label: 'Resources', href: '#directory' },
   { label: 'Events', href: '#events' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Highlights', href: '#highlights' },
   { label: 'Submit Resource', href: '#submit-resource' },
+  { label: 'Contact', href: '#contact' },
+  
 ];
 
 export default function Navbar() {
@@ -44,7 +46,7 @@ export default function Navbar() {
       <div className="navbar-container">
         <div className="navbar-inner">
           {/* Logo */}
-          <a href="#home" onClick={(e) => scrollToSection(e, '#home')} className="navbar-logo">
+          <a href="#hero" onClick={(e) => scrollToSection(e, '#hero')} className="navbar-logo">
             <div className="logo-badge">C</div>
             <span>Coppell Community Resource Hub</span>
           </a>
