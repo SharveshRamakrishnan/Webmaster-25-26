@@ -1,11 +1,13 @@
 .resource-form {
-  max-width: 680px;
-  margin: 0px auto;
-  padding: 50px 40px;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 64px 52px;
   background: #ffffff;
   border: 3px solid #f97316;
   border-radius: 20px;
-  box-shadow: 0 12px 40px rgba(249, 115, 22, 0.15);
+  box-shadow: 0 18px 48px rgba(249, 115, 22, 0.16);
+  color-scheme: light;
 }
 
 .resource-form__title {
@@ -44,6 +46,7 @@
   color: #1f2937;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   border-color: #f97316;
+  color-scheme: light;
 }
 
 .resource-form__input::placeholder {
@@ -62,6 +65,7 @@
   resize: vertical;
   color: #1f2937;
   background: #ffffff;
+  color-scheme: light;
 }
 
 .resource-form__textarea::placeholder {
@@ -96,4 +100,16 @@
   justify-content: center;
   padding: 80px 16px 40px;
   background: #ffffff;
+  color-scheme: light;
+}
+
+/* Match the class used in the JSX so the white background applies in dark mode */
+.resource-form-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 16px 40px;
+  background: #ffffff;
+  color-scheme: light;
 }
