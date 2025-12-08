@@ -1,24 +1,25 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import './css/app.css';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import PopularCategories from './components/PopularCategories';
-import ResourceDirectory from './components/ResourceDirectory';
-import EventsStrip from './components/EventsStrip';
-import HighlightSpotlight from './components/HighlightSpotlight';
 import Footer from './components/Footer';
-import ResourceForm from './components/ResourceForm';
+import Home from './pages/Home';
+import ResourceDirectoryPage from './pages/ResourceDirectoryPage';
+import Contact from './pages/Contact';
+import Highlights from './pages/Highlights';
+import SubmitResource from './pages/SubmitResource';
+
 export default function App() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <PopularCategories />
-      <ResourceDirectory />
-      <EventsStrip />
-      <HighlightSpotlight />
-      <section id="submit-resource">
-        <ResourceForm />
-      </section>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/resources" element={<ResourceDirectoryPage />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/highlights" element={<Highlights />} />
+        <Route path="/submit-resource" element={<SubmitResource />} />
+      </Routes>
       <Footer />
     </>
   );
