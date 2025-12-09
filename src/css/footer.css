@@ -1,6 +1,7 @@
 .footer-root {
-  background: linear-gradient(135deg,#0f1724 0%, #111827 100%);
-  color: #d1d5db;
+  background: var(--bg-secondary, linear-gradient(135deg,#0f1724 0%, #111827 100%));
+  color: var(--text-secondary, #d1d5db);
+  border-top: 1px solid var(--border-color, #e5e7eb);
 }
 
 /* Container similar to Tailwind max-w-7xl and padding */
@@ -54,18 +55,18 @@
 }
 
 .brand-name {
-  color: #ffffff;
+  color: var(--text-primary, #ffffff);
   font-weight: 600;
 }
 
 .footer-root p,
 .footer-root li {
-  color: #9ca3af;
+  color: var(--text-secondary, #9ca3af);
   line-height: 1.6;
 }
 
 .footer-heading {
-  color: #ffffff;
+  color: var(--text-primary, #ffffff);
   margin-bottom: 1rem;
   font-weight: 600;
 }
