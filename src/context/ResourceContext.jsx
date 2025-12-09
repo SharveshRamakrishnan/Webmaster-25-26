@@ -23,7 +23,11 @@ export function ResourceProvider({children}) {
         </ResourceContext.Provider>
     );
 }
+<<<<<<< Updated upstream
 
 ResourceProvider.propTypes = {
     children: PropTypes.node.isRequired,
 };
+=======
+}
+>>>>>>> Stashed changes

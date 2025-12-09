@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, LogIn } from 'lucide-react';
 import '../css/navbar.css';
 
@@ -13,7 +12,12 @@ const navLinks = [
   { label: 'Contact', href: '/contact' },
 ];
 
+<<<<<<< Updated upstream
 export default function Navbar({ onLoginClick = () => {} }) {
+=======
+export default function Navbar() {
+  const navigate = useNavigate();
+>>>>>>> Stashed changes
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -59,7 +63,7 @@ export default function Navbar({ onLoginClick = () => {} }) {
               </Link>
             ))}
             <button
-              onClick={onLoginClick}
+              onClick={() => navigate('/login')}
               className="nav-login-btn"
             >
               <LogIn size={18} />
@@ -90,7 +94,7 @@ export default function Navbar({ onLoginClick = () => {} }) {
             <button
               onClick={() => {
                 setIsMobileMenuOpen(false);
-                onLoginClick();
+                navigate('/login');
               }}
               className="nav-login-btn-mobile"
             >
@@ -103,7 +107,10 @@ export default function Navbar({ onLoginClick = () => {} }) {
     </nav>
   );
 }
+<<<<<<< Updated upstream
 
 Navbar.propTypes = {
   onLoginClick: PropTypes.func,
 };
+=======
+>>>>>>> Stashed changes

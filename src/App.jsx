@@ -8,8 +8,8 @@ import Home from './pages/Home';
 import ResourceDirectoryPage from './pages/ResourceDirectoryPage';
 import Events from './pages/Events';
 import Contact from './pages/Contact';
-import Highlights from './pages/Highlights';
 import SubmitResource from './pages/SubmitResource';
+import Login from './pages/Login';
 
 export default function App() {
   return (
@@ -18,10 +18,10 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/resources" element={<ResourceDirectoryPage />} />
         <Route path="/events" element={<Events />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/highlights" element={<Highlights />} />
         <Route path="/submit-resource" element={<SubmitResource />} />
       </Routes>
       <Footer />
