@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 const resources = [
+=======
+export const resources = [
+>>>>>>> Stashed changes
   { id: 1, name: 'Coppell Family Health Clinic', category: 'health', description: 'Comprehensive family healthcare services including preventive care, wellness checkups, and urgent care.', phone: '(972) 304-3700', email: 'health@coppelltx.gov', website: 'www.coppellclinic.org', address: '123 Main St, Coppell, TX 75019', hours: 'Mon-Fri 8AM-6PM, Sat 9AM-2PM' },
   { id: 2, name: 'Community Learning Center', category: 'education', description: 'Adult education programs, tutoring services, and computer literacy courses for all ages.', phone: '(972) 304-3600', email: 'learning@coppelltx.gov', website: 'www.coppelllearning.org', address: '456 Oak Ave, Coppell, TX 75019', hours: 'Mon-Thu 3PM-8PM, Sat 10AM-3PM' },
   { id: 3, name: 'Food Bank Volunteer Program', category: 'volunteering', description: 'Join our team helping distribute food to families in need. Flexible scheduling available.', phone: '(972) 304-3800', email: 'volunteer@coppelltx.gov', website: 'www.coppellfoodbank.org', address: '789 Park Way, Coppell, TX 75019', hours: 'Flexible scheduling' },
@@ -65,4 +69,8 @@ const resources = [
   { id: 64, name: 'Intergenerational Programs', category: 'events', description: 'Programs bringing together different generations for shared learning and activities.', phone: '(555) 555-0164', email: 'intergenerational@placeholder.org', website: 'www.placeholder.org', address: '186 Service Street, City, ST 00064', hours: 'Mon-Fri 9AM-5PM' },
 ];
 
+<<<<<<< Updated upstream
 export default resources;
+=======
+export default resources;
+>>>>>>> Stashed changes

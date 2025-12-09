@@ -38,6 +38,7 @@ export default function Hero() {
                 </p>
 
                 <div className="hero-buttons">
+<<<<<<< Updated upstream
                     <button
                         onClick={handleExploreClick}
                         className="btn-explore"
@@ -52,6 +53,10 @@ export default function Hero() {
                     >
                         Submit a Resource
                     </button>
+=======
+                    <button className="btn-light" onClick={handleExploreClick}>Explore Resources</button>
+                    <button className="btn-dark" onClick={handleSubmitClick}>Submit a Resource</button>
+>>>>>>> Stashed changes
                 </div>
 
                 {/* Stats */}
