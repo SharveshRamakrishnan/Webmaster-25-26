@@ -1,0 +1,127 @@
+/* Events Page Main Container */
+.events-page-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0 20px;
+    padding-bottom: 32px;
+    background: white;
+}
+
+/* Calendar CTA Section */
+.calendar-cta-section {
+    background: linear-gradient(to bottom right, #fef2f2, #fdf2f8, #faf5ff);
+    padding: 64px 20px;
+    margin-top: 48px;
+}
+
+.calendar-cta-container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.calendar-cta-icon {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.calendar-cta-icon svg {
+    width: 48px;
+    height: 48px;
+    color: var(--accent-orange, #ea580c);
+}
+
+.calendar-cta-title {
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(to right, #ea580c, #ec4899);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+}
+
+.calendar-cta-description {
+    font-size: 16px;
+    color: var(--text-secondary, #4b5563);
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+.calendar-cta-button {
+    background: linear-gradient(to right, #ea580c, #ec4899);
+    color: white;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.calendar-cta-button:hover {
+    box-shadow: 0 12px 24px rgba(234, 88, 12, 0.3);
+    transform: translateY(-2px);
+}
+
+.calendar-cta-button:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .events-page-container {
+        padding: 0 16px;
+        padding-bottom: 24px;
+    }
+
+    .calendar-cta-section {
+        padding: 48px 16px;
+        margin-top: 32px;
+    }
+
+    .calendar-cta-title {
+        font-size: 24px;
+    }
+
+    .calendar-cta-description {
+        font-size: 14px;
+    }
+
+    .calendar-cta-button {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .events-page-container {
+        padding-bottom: 16px;
+    }
+
+    .calendar-cta-section {
+        padding: 32px 16px;
+    }
+
+    .calendar-cta-title {
+        font-size: 20px;
+    }
+
+    .calendar-cta-icon svg {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Dark mode support */
+.dark .calendar-cta-section {
+    background: linear-gradient(to bottom right, #1a1a2e, #16213e, #0f3460);
+}
+
+.dark .calendar-cta-description {
+    color: var(--text-secondary, #cbd5e1);
+}
