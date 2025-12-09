@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Search } from 'lucide-react';
+import reactLogo from '../assets/react.svg';
 import '../css/hero.css';
 
 export default function Hero() {
@@ -21,7 +22,7 @@ export default function Hero() {
         <section id="hero" className="hero-section">
             <div className="hero-background">
                 <img
-                    src="https://images.unsplash.com/photo-1632580254134-94c4a73dab76?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBnYXRoZXJpbmclMjBwZW9wbGV8ZW58MXx8fHwxNzY1MTA0MTg5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                    src={reactLogo}
                     alt="Community gathering"
                     className="hero-image"
                 />

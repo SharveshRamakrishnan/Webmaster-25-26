@@ -1,5 +1,5 @@
 .resources-hero {
-  background: linear-gradient(135deg, #ea580c 0%, #ec4899 50%, #9333ea 100%);
+  background: linear-gradient(to bottom right, #ea580c, #ec4899, #9333ea);
   padding: 4rem 1rem;
   margin-top: 0;
 }
