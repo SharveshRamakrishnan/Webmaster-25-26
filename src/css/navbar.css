@@ -1,6 +1,210 @@
-.navbar { background: #e4c090; padding: 15px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.1); position: fixed; width: 100%; top: 0; z-index: 100; }
-.navbar-inner { width: 90%; margin: auto; display: flex; justify-content: space-between; align-items: center; }
-.navbar-inner .logo { margin: 0; font-size: 24px; color: black; margin-left: -80px; }
-.navbar nav { display: flex; gap: 20px; }
-.navbar nav a { text-decoration: none; color: black; font-weight: 500; font-size: 14px; padding: 8px 12px; border-radius: 4px; transition: background 0.3s; }
-.navbar nav a:hover { background: #f0f0f0; }
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background-color: var(--bg-primary, rgba(255, 255, 255, 0.95));
+  box-shadow: 0 1px 3px var(--shadow, rgba(0, 0, 0, 0.1));
+  transition: all 0.3s ease;
+}
+
+.navbar-scrolled {
+  background-color: var(--bg-primary, white);
+  box-shadow: 0 4px 12px var(--shadow, rgba(0, 0, 0, 0.15));
+}
+
+.navbar-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.navbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 5rem;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.navbar-logo:hover {
+  transform: translateY(-2px);
+}
+
+.logo-badge {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f97316, #ec4899);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  background: linear-gradient(90deg, #ea580c, #be185d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.navbar-desktop {
+  display: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .navbar-desktop {
+    display: flex;
+  }
+}
+
+.nav-link {
+  position: relative;
+  color: var(--text-secondary, #374151);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  display: inline-block;
+}
+
+.nav-link:hover {
+  color: var(--accent-orange, #ea580c);
+}
+
+.nav-link-active {
+  color: var(--accent-orange, #ea580c);
+}
+
+.nav-underline {
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  height: 2px;
+  background-color: #ea580c;
+  transition: width 0.3s ease;
+  width: 0;
+  display: block;
+}
+
+.nav-link:hover .nav-underline {
+  width: 100%;
+}
+
+.nav-link-active .nav-underline {
+  width: 100%;
+}
+
+.nav-login-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #f97316, #ec4899);
+  color: white;
+  padding: 0.625rem 1.5rem;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(249, 115, 22, 0.2);
+}
+
+.nav-login-btn:hover {
+  box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
+  transform: translateY(-2px);
+}
+
+.navbar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  color: #374151;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navbar-toggle:hover {
+  color: #ea580c;
+}
+
+@media (min-width: 1024px) {
+  .navbar-toggle {
+    display: none;
+  }
+}
+
+.navbar-mobile {
+  display: block;
+  padding: 1rem 0;
+  border-top: 1px solid #f3f4f6;
+}
+
+@media (min-width: 1024px) {
+  .navbar-mobile {
+    display: none;
+  }
+}
+
+.nav-link-mobile {
+  display: block;
+  padding: 0.75rem 0;
+  color: #374151;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link-mobile:hover {
+  color: #ea580c;
+}
+
+.nav-link-mobile-active {
+  color: #ea580c;
+}
+
+.nav-login-btn-mobile {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #f97316, #ec4899);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  box-shadow: 0 4px 6px rgba(249, 115, 22, 0.2);
+}
+
+.nav-login-btn-mobile:hover {
+  box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
+  transform: translateY(-2px);
+}
