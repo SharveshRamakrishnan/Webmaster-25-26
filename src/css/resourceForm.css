@@ -3,11 +3,10 @@
   max-width: 860px;
   margin: 0 auto;
   padding: 64px 52px;
-  background: #ffffff;
-  border: 3px solid #f97316;
+  background: var(--card-bg, #ffffff); /* auto-switches with dark mode */
+  border: 3px solid var(--accent-orange, #f97316);
   border-radius: 20px;
-  box-shadow: 0 18px 48px rgba(249, 115, 22, 0.16);
-  color-scheme: light;
+  box-shadow: 0 18px 48px var(--shadow, rgba(0,0,0,0.1));
 }
 
 .resource-form__title {
@@ -33,7 +32,7 @@
 .resource-form__label {
   font-size: 14px;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--text-primary, #1f2937); /* auto-switches with dark mode */
 }
 
 .resource-form__input {
@@ -47,6 +46,7 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   border-color: #f97316;
   color-scheme: light;
+  box-sizing: border-box; /* include padding/border in width */
 }
 
 .resource-form__input::placeholder {
@@ -61,11 +61,18 @@
 }
 
 .resource-form__textarea {
+  width: 100%; /* match input width */
   min-height: 120px;
   resize: vertical;
+  padding: 12px 14px; /* match input padding */
+  border: 1px solid #d1d5db; /* match input border */
+  border-radius: 8px; /* match input radius */
+  font-size: 14px; /* match input font */
   color: #1f2937;
   background: #ffffff;
   color-scheme: light;
+  box-sizing: border-box; /* include padding/border in width */
+  margin: 0; /* ensure no extra margin */
 }
 
 .resource-form__textarea::placeholder {
@@ -99,8 +106,8 @@
   align-items: center;
   justify-content: center;
   padding: 80px 16px 40px;
-  background: #ffffff;
-  color-scheme: light;
+  background: var(--bg-primary, #ffffff); /* auto-switches with dark mode */
+  color: var(--text-primary, #1f2937);
 }
 
 /* Match the class used in the JSX so the white background applies in dark mode */
@@ -110,6 +117,8 @@
   align-items: center;
   justify-content: center;
   padding: 80px 16px 40px;
+  background: var(--bg-primary, #ffffff); /* auto-switches with dark mode */
+  color: var(--text-primary, #1f2937);
   background: #ffffff;
   color-scheme: light;
 }
