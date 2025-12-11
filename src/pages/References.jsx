@@ -11,7 +11,7 @@ export default function References() {
     },
     {
       name: 'Coppell Parks and Recreation',
-      url: 'https://www.coppelltx.gov/departments/parks-recreation',
+      url: 'https://www.coppelltx.gov/771/Parks',
       description: 'Information about parks, facilities, and recreational programs'
     },
     {
