@@ -12,6 +12,7 @@ export default function Signup() {
     const[password, setPassword] = useState('');
     const[confirmPassword, setConfirmPassword] = useState('');
     const[showPassword, setShowPassword] = useState(false);
+    const[showConfirmPassword, setShowConfirmPassword] = useState(false);
     const[error, setError] = useState('');
     const[loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -33,7 +34,8 @@ export default function Signup() {
         }
 
         // Basic email format validation
-        if (!email.includes('@')) {
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!re.test(email)) {
             setError('Please enter a valid email');
             setLoading(false);
             return;
@@ -128,7 +130,7 @@ export default function Signup() {
                                 className="password-toggle"
                                 onClick={() => setShowPassword(!showPassword)}
                             >
-                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                             </button>
                         </div>
                     </div>
@@ -140,13 +142,21 @@ export default function Signup() {
                         <div className ="input-wrapper">
                             <Lock className="input-icon" size={20} />
                             <input
-                                type={showPassword ? 'text' : 'password'}
+                                type={showConfirmPassword ? 'text' : 'password'}
                                 id = "confirmPassword"
                                 placeholder  = "Confirm your password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 className= "form-input"
                             />
+                            {/* Button to toggle password visibility */}
+                            <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            >
+                                {showConfirmPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                            </button>
                         </div>
                     </div>
 
