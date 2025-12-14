@@ -1,16 +1,113 @@
-# React + Vite
+# Coppell Community Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive community platform for the City of Coppell, connecting residents with local events, resources, and community information.
 
-Currently, two official plugins are available:
+> **Note:** This project was created for the TSA Webmaster Competition by the Coppell Team 1086-10.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
 
-## React Compiler
+Coppell Community Hub is a modern React web application built with Vite that serves as a centralized hub for community engagement. It provides residents with easy access to local events, community resources, highlights, blogs, and important information about the Coppell community.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- **Event Management** - Browse and filter upcoming community events
+- **Resource Directory** - Discover and submit community resources
+- **Blog & News** - Read the latest community news and announcements
+- **Community Highlights** - Learn about notable community features and initiatives
+- **Dark Mode Support** - Comfortable viewing experience with light and dark themes
+- **User Authentication** - User login and signup functionality
+- **Responsive Design** - Optimized for desktop and mobile devices
+- **Advanced Filtering** - Search and filter events and resources by category
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Technology Stack
+
+- **Frontend Framework** - [React 19](https://react.dev)
+- **Build Tool** - [Vite](https://vitejs.dev)
+- **Routing** - [React Router v7](https://reactrouter.com)
+- **Styling** - Tailwind CSS with custom CSS modules
+- **Icons** - [Lucide React](https://lucide.dev)
+- **State Management** - React Context API
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone <repository-url>
+cd CoppellCommunityHub
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Start the development server
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+This generates optimized production files in the `build/` directory.
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Project Structure
+
+```
+src/
+├── components/        # Reusable React components
+├── pages/            # Page components for routing
+├── context/          # React Context for global state
+├── css/              # Styling files
+├── data/             # Static data (events, resources)
+├── hooks/            # Custom React hooks
+├── assets/           # Images and media files
+├── App.jsx           # Root component
+└── main.jsx          # Application entry point
+```
+
+### Key Components
+
+- **Navbar** - Navigation header with dark mode toggle
+- **EventsGrid** - Display and filter community events
+- **ResourceDirectory** - Browse and manage community resources
+- **Blog** - Blog post listing and detail pages
+- **Hero** - Landing page hero section
+- **Footer** - Application footer with links and info
+
+## Available Scripts
+
+- `npm run dev` - Start development server with HMR
+- `npm run build` - Build for production
+- `npm run lint` - Run ESLint to check code quality
+- `npm run preview` - Preview production build locally
+
+## Linting
+
+The project uses ESLint to maintain code quality. Run linting with:
+
+```bash
+npm run lint
+```
+
+## Deployment
+
+The project is configured for deployment on Netlify with the `netlify.toml` configuration file.
