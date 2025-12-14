@@ -37,10 +37,11 @@ export default function Login() {
       }
 
       // Basic email format validation
-      if (!email.includes('@')) {
-        setError('Please enter a valid email');
-        setLoading(false);
-        return;
+      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!re.test(email)) {
+          setError('Please enter a valid email');
+          setLoading(false);
+          return;
       }
 
       // Mock login success - in production, verify with backend
