@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
 import {Mail, Lock, Eye, EyeOff, User} from 'lucide-react';
 import '../css/signup.css';
-import {auth, googleProvider } from "./auth";
+import {auth, googleProvider } from "../../build/auth";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import { signInWithPopup } from "firebase/auth";
 
@@ -67,6 +67,8 @@ export default function Signup() {
 
         } catch (error) {
             console.error(error);
+            setError(error.message);
+            setLoading(false);
         }
     }
 

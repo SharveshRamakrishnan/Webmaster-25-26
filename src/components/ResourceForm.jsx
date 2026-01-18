@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import '../css/resourceForm.css';
+import {db} from "../../build/auth";
+import{collection, addDoc, serverTimestamp} from "firebase/firestore";
+
 export default function ResourceForm(){
   const [formData, setFormData] = useState({firstName: '', lastName: '', resourceName: '', website: '', category: '', description: ''});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -12,33 +15,17 @@ export default function ResourceForm(){
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      await fetch("https://script.google.com/macros/s/AKfycbwMLj97yo1CJB9If_hLUsTUvrTpadBnDhwjAI51dGsVUiwCGFbNrA23maTF8y9LUy8tSg/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify(formData),
-        headers: {
-          "Content-Type": "text/plain"
-        }
-      });
-
-      // Animation plays, then reset form after 2.5 seconds
-      setTimeout(() => {
-        setFormData({
-          firstName: '',
-          lastName: '',
-          resourceName: '',
-          website: '',
-          category: '',
-          description: '',
-        });
-        setIsSubmitting(false);
-      }, 2500);
-
-    } catch (err) {
-      console.error("Error submitting form:", err);
-      setIsSubmitting(false);
-    }
+    await addDoc(collection(db, "resources"), {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      resourceName: formData.resourceName,
+      website: formData.website,
+      category: formData.category,
+      description: formData.description,
+      timestamp: serverTimestamp()
+    });
+    setFormData({firstName: '', lastName: '', resourceName: '', website: '', category: '', description: ''});
+    setIsSubmitting(false);
   };
 
   return(
