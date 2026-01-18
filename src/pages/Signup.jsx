@@ -71,7 +71,6 @@ export default function Signup() {
             setError(friendlyError);
             setLoading(false);
         }
-
     };
 
     const handleGoogleSignup = async () => {
@@ -102,14 +101,6 @@ export default function Signup() {
             setLoading(false);
         }
     };
-
-
-        } catch (error) {
-            console.error(error);
-            setError(error.message);
-            setLoading(false);
-        }
-    }
 
     return (
         <div className = "signup-container">

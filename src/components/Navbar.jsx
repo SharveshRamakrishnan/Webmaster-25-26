@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, LogIn, Moon, Sun, LogOut, User } from 'lucide-react';
+import { Menu, X, LogIn, Moon, Sun, LogOut, Settings } from 'lucide-react';
 import { useDarkMode } from '../context/DarkModeContext';
 import { useAuth } from '../context/AuthContext';
 import '../css/navbar.css';
@@ -20,9 +20,29 @@ export default function Navbar({ onLoginClick = () => {} }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const userMenuRef = useRef(null);
   const location = useLocation();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const { user, logout, isAuthenticated } = useAuth();
+
+  // Get user initials from email
+  const getUserInitials = () => {
+    if (!user?.email) return '';
+    const parts = user.email.split('@')[0].split('.');
+    return (parts[0][0] + (parts[1]?.[0] || parts[0][1] || '')).toUpperCase();
+  };
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setShowUserMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,14 +92,60 @@ export default function Navbar({ onLoginClick = () => {} }) {
             >
               {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
-            <button
-              onClick={onLoginClick}
-              className="nav-login-btn"
-              type="button"
-            >
-              <LogIn size={18} />
-              Login
-            </button>
+            {isAuthenticated ? (
+              <div className="user-menu-container" ref={userMenuRef}>
+                <button
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  className={`user-initials-btn ${isLoggingOut ? 'logging-out' : ''}`}
+                  type="button"
+                  title={user?.email}
+                >
+                  {getUserInitials()}
+                </button>
+                {showUserMenu && (
+                  <div className="user-dropdown-menu">
+                    <div className="user-menu-header">
+                      <span className="user-email-label">{user?.email}</span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setShowUserMenu(false);
+                      }}
+                      className="user-menu-item"
+                      type="button"
+                    >
+                      <Settings size={16} />
+                      <span>Profile Settings</span>
+                    </button>
+                    <hr className="user-menu-divider" />
+                    <button
+                      onClick={async () => {
+                        setIsLoggingOut(true);
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                        await logout();
+                        setShowUserMenu(false);
+                        setIsLoggingOut(false);
+                        window.location.href = '/';
+                      }}
+                      className="user-menu-item logout"
+                      type="button"
+                    >
+                      <LogOut size={16} />
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={onLoginClick}
+                className="nav-login-btn"
+                type="button"
+              >
+                <LogIn size={18} />
+                Login
+              </button>
+            )}
           </div>
 
           <button
@@ -113,28 +179,49 @@ export default function Navbar({ onLoginClick = () => {} }) {
                 {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
               </button>
               {isAuthenticated ? (
-                <div className="user-menu-container">
+                <div className="user-menu-container" ref={userMenuRef}>
                   <button
                     onClick={() => setShowUserMenu(!showUserMenu)}
-                    className="user-profile-btn"
+                    className={`user-initials-btn-mobile ${isLoggingOut ? 'logging-out' : ''}`}
                     type="button"
+                    title={user?.email}
                   >
-                    <User size={18} />
-                    <span className="user-email">{user?.email}</span>
+                    {getUserInitials()}
                   </button>
                   {showUserMenu && (
-                    <button
-                      onClick={async () => {
-                        await logout();
-                        setShowUserMenu(false);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="nav-logout-btn"
-                      type="button"
-                    >
-                      <LogOut size={16} />
-                      Logout
-                    </button>
+                    <div className="user-dropdown-menu-mobile">
+                      <div className="user-menu-header">
+                        <span className="user-email-label">{user?.email}</span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setShowUserMenu(false);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="user-menu-item"
+                        type="button"
+                      >
+                        <Settings size={16} />
+                        <span>Profile Settings</span>
+                      </button>
+                      <hr className="user-menu-divider" />
+                      <button
+                        onClick={async () => {
+                          setIsLoggingOut(true);
+                          await new Promise(resolve => setTimeout(resolve, 500));
+                          await logout();
+                          setShowUserMenu(false);
+                          setIsMobileMenuOpen(false);
+                          setIsLoggingOut(false);
+                          window.location.href = '/';
+                        }}
+                        className="user-menu-item logout"
+                        type="button"
+                      >
+                        <LogOut size={16} />
+                        <span>Logout</span>
+                      </button>
+                    </div>
                   )}
                 </div>
               ) : (

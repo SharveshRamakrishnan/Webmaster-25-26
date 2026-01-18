@@ -32,7 +32,7 @@ export default function Login() {
       setSuccess(true);
       setLoading(false);
       
-      // Wait for animation, then redirect to home page
+      // Wait for animation, then redirect to home
       setTimeout(() => {
         navigate('/');
       }, 1500);
@@ -84,7 +84,7 @@ export default function Login() {
       setSuccess(true);
       setLoading(false);
       
-      // Wait for animation, then redirect to home page
+      // Wait for animation, then redirect to home
       setTimeout(() => {
         navigate('/');
       }, 1500);

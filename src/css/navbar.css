@@ -379,3 +379,213 @@
   background: #7f1d1d;
   border-color: #b91c1c;
 }
+
+/* User Initials Button */
+.user-initials-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ec4899 0%, #fb923c 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.user-initials-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+}
+
+.dark .user-initials-btn {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+}
+
+.dark .user-initials-btn:hover {
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+}
+
+/* User Dropdown Menu */
+.user-menu-container {
+  position: relative;
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  top: 3.5rem;
+  right: 0;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.dark .user-dropdown-menu {
+  background: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.user-menu-header {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.dark .user-menu-header {
+  background: #111827;
+  border-color: #374151;
+}
+
+.user-email-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #6b7280;
+  word-break: break-all;
+  display: block;
+  line-height: 1.4;
+}
+
+.dark .user-email-label {
+  color: #d1d5db;
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  text-align: left;
+  min-height: 2.5rem;
+}
+
+.user-menu-item svg {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.user-menu-item:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.dark .user-menu-item {
+  color: #e5e7eb;
+}
+
+.dark .user-menu-item:hover {
+  background: #2d3748;
+  color: white;
+}
+
+.user-menu-item.logout {
+  color: #dc2626;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 0.875rem;
+}
+
+.user-menu-item.logout:hover {
+  background: #fef2f2;
+  color: #7f1d1d;
+}
+
+.dark .user-menu-item.logout {
+  color: #fca5a5;
+  border-top-color: #374151;
+}
+
+.dark .user-menu-item.logout:hover {
+  background: #7f1d1d;
+  color: #fecaca;
+}
+
+.user-menu-divider {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 0;
+  padding: 0;
+  display: none;
+}
+
+.dark .user-menu-divider {
+  border-top-color: #374151;
+}
+
+/* Mobile User Initials Button */
+.user-initials-btn-mobile {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ec4899 0%, #fb923c 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 0.75rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.user-initials-btn-mobile:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+}
+
+.dark .user-initials-btn-mobile {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+}
+
+.dark .user-initials-btn-mobile:hover {
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+}
+
+/* Mobile User Dropdown Menu */
+.user-dropdown-menu-mobile {
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 0.5rem;
+}
+
+.dark .user-dropdown-menu-mobile {
+  background: #1f2937;
+  border-top-color: #374151;
+}
+
+/* Logout Animation */
+.user-initials-btn.logging-out {
+  animation: logoutFadeOut 0.5s ease-out forwards;
+}
+
+.user-initials-btn-mobile.logging-out {
+  animation: logoutFadeOut 0.5s ease-out forwards;
+}
+
+@keyframes logoutFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(360deg);
+  }
+}
