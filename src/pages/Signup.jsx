@@ -49,12 +49,26 @@ export default function Signup() {
         try{
             const user = await createUserWithEmailAndPassword(auth, email, password);
             setLoading(false);
+            // Redirect to login after successful signup
+            setTimeout(() => {
+                navigate('/login');
+            }, 1000);
 
         }
-
-        catch{
-            console.error(error);
-            setError(error.message);
+        catch(error){
+            console.error('Signup error:', error);
+            
+            // Map Firebase error codes to friendly messages
+            const errorMessages = {
+                'auth/email-already-in-use': 'This email is already registered. Please login or use a different email',
+                'auth/weak-password': 'Password must be at least 6 characters long',
+                'auth/invalid-email': 'Invalid email address',
+                'auth/operation-not-allowed': 'Email/password signup is not available',
+                'auth/too-many-requests': 'Too many signup attempts. Please try again later',
+            };
+            
+            const friendlyError = errorMessages[error.code] || error.message;
+            setError(friendlyError);
             setLoading(false);
         }
 

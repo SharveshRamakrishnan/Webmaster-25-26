@@ -59,7 +59,18 @@ export default function Login() {
       }, 1500);
     } catch (error) {
       console.error('Login error:', error);
-      setError(error.message);
+      
+      // Map Firebase error codes to friendly messages
+      const errorMessages = {
+        'auth/user-not-found': 'No account found with this email address',
+        'auth/invalid-credential': 'Incorrect email or password',
+        'auth/invalid-email': 'Invalid email address',
+        'auth/user-disabled': 'This account has been disabled',
+        'auth/too-many-requests': 'Too many failed login attempts. Please try again later',
+      };
+      
+      const friendlyError = errorMessages[error.code] || error.message;
+      setError(friendlyError);
       setLoading(false);
     }
   };
