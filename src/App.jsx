@@ -19,6 +19,7 @@ import Highlights from './pages/Highlights';
 import References from './pages/References';
 import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
+import About from './pages/About';
 import { ResourceProvider } from './context/ResourceContext';
 import { AuthProvider } from './context/AuthContext';
 
@@ -48,21 +49,24 @@ export default function App() {
       <ResourceProvider>
         <ScrollToTop />
         <Navbar onLoginClick={handleLoginClick} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/resources" element={<ResourceDirectoryPage />} />
-          <Route path="/saved-items" element={<SavedItems />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/submit-resource" element={<SubmitResource />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/highlights" element={<Highlights />} />
-          <Route path="/references" element={<References />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogDetail />} />
-        </Routes>
+        <main style={{ flex: 1 }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/resources" element={<ResourceDirectoryPage />} />
+            <Route path="/saved-items" element={<SavedItems />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/submit-resource" element={<SubmitResource />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/highlights" element={<Highlights />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/references" element={<References />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogDetail />} />
+          </Routes>
+        </main>
         <Footer />
       </ResourceProvider>
     </AuthProvider>

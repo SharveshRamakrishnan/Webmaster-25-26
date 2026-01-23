@@ -4,6 +4,10 @@
   border-top: 1px solid var(--border-color, #e5e7eb);
 }
 
+.dark .footer-root {
+  border-top: none;
+}
+
 /* Container similar to Tailwind max-w-7xl and padding */
 #contact > div, .footer-container {
   max-width: 1280px;

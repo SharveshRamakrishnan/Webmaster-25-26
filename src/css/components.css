@@ -48,7 +48,7 @@
 
 /* Dark mode */
 .dark .page-hero {
-  background: linear-gradient(to bottom right, #1a2a4e, #16213e, #0f3460);
+  background: linear-gradient(to bottom right, #1a2a4e, #16213e, #0f3460) !important;
 }
 
 /* ============================================
