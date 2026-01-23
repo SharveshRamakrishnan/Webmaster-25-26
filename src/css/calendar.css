@@ -170,6 +170,17 @@
   border-color: var(--accent-orange, #ea580c);
 }
 
+.day.has-events.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.day.has-events.clickable:hover {
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.2), rgba(236, 72, 153, 0.2));
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.2);
+}
+
 .dark .day {
   background: #374151;
   border-color: #4b5563;
@@ -182,6 +193,12 @@
 
 .dark .day.has-events {
   background: rgba(234, 88, 12, 0.2);
+}
+
+.dark .day.has-events.clickable:hover {
+  background: rgba(234, 88, 12, 0.35);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.3);
 }
 
 .day-number {
@@ -328,6 +345,12 @@
   background: #1f2937;
 }
 
+.event-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  align-items: center;
+}
 .event-info h3 {
   font-size: 1.1rem;
   font-weight: 700;
@@ -392,6 +415,65 @@
 .dark .event-remove:hover {
   background: rgba(220, 38, 38, 0.2);
   color: #fca5a5;
+}
+
+.event-save {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary, #999);
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.event-save svg {
+  stroke: currentColor;
+}
+
+.event-save:hover {
+  background: rgba(234, 88, 12, 0.1);
+  color: var(--accent-orange, #ea580c);
+}
+
+.event-save.active {
+  color: var(--accent-orange, #ea580c);
+}
+
+.event-save.active svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.event-save.active:hover {
+  background: rgba(234, 88, 12, 0.1);
+}
+
+.event-save:has-next-sibling .event-remove {
+  margin-left: 0;
+}
+
+.dark .event-save:hover {
+  background: rgba(255, 140, 66, 0.15);
+  color: var(--accent-orange);
+}
+
+.dark .event-save.active {
+  color: var(--accent-orange);
+}
+
+.dark .event-save.active svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.dark .event-save.active:hover {
+  background: rgba(255, 140, 66, 0.15);
+  color: var(--accent-orange);
 }
 
 .calendar-empty {

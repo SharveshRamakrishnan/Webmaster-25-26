@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Clock, MapPin, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, MapPin, X, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useResources } from '../context/ResourceContext';
 import { useAuth } from '../context/AuthContext';
+import EventDetailModal from '../components/EventDetailModal';
 import eventsData from '../data/events';
 import '../css/calendar.css';
 
 export default function Calendar() {
-  const [currentDate, setCurrentDate] = useState(new Date(2024, 0, 1));
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const { userEvents, toggleUserEvent } = useResources();
   const { isAuthenticated } = useAuth();
 
@@ -92,7 +94,11 @@ export default function Calendar() {
             {days.map(day => {
               const dayEvents = getUserEventsForDay(day);
               return (
-                <div key={day} className={`day ${dayEvents.length > 0 ? 'has-events' : ''}`}>
+                <div 
+                  key={day} 
+                  className={`day ${dayEvents.length > 0 ? 'has-events clickable' : ''}`}
+                  onClick={() => dayEvents.length > 0 && dayEvents.length === 1 && setSelectedEvent(dayEvents[0])}
+                >
                   <div className="day-number">{day}</div>
                   {dayEvents.length > 0 && (
                     <div className="day-events">
@@ -152,18 +158,31 @@ export default function Calendar() {
                     </div>
                     <p>{event.description}</p>
                   </div>
-                  <button
-                    onClick={() => toggleUserEvent(event.id)}
-                    className="event-remove"
-                    title="Remove from calendar"
-                  >
-                    <X size={20} />
-                  </button>
+                  <div className="event-actions">
+                    <button
+                      onClick={() => toggleUserEvent(event.id)}
+                      className={`event-save ${userEvents.includes(event.id) ? 'active' : ''}`}
+                      title={userEvents.includes(event.id) ? 'Saved to favorites' : 'Save to favorites'}
+                    >
+                      <Heart size={18} fill={userEvents.includes(event.id) ? 'currentColor' : 'none'} />
+                    </button>
+                    <button
+                      onClick={() => toggleUserEvent(event.id)}
+                      className="event-remove"
+                      title="Remove from calendar"
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
                 </div>
               ))}
           </div>
         )}
       </div>
+
+      {selectedEvent && (
+        <EventDetailModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+      )}
     </div>
   );
 }

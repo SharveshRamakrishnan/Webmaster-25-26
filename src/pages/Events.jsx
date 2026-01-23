@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Calendar, Clock, MapPin, Users, Bookmark } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, Bookmark, Heart } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
+import { useResources } from '../context/ResourceContext';
+import { useAuth } from '../context/AuthContext';
 import '../css/eventsPage.css';
 import reactLogo from '../assets/react.svg';
 
@@ -80,7 +82,8 @@ const categories = ['All', 'Community', 'Volunteering', 'Health', 'Education', '
 export default function Events() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [savedEvents, setSavedEvents] = useState(new Set());
+  const { userEvents, toggleUserEvent } = useResources();
+  const { isAuthenticated } = useAuth();
 
   const filteredEvents = eventData
     .filter(event => selectedCategory === 'All' || event.category === selectedCategory)
@@ -90,14 +93,10 @@ export default function Events() {
       event.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-  const toggleSavedEvent = (eventId) => {
-    const newSaved = new Set(savedEvents);
-    if (newSaved.has(eventId)) {
-      newSaved.delete(eventId);
-    } else {
-      newSaved.add(eventId);
+  const handleSaveEvent = (eventId) => {
+    if (isAuthenticated) {
+      toggleUserEvent(eventId);
     }
-    setSavedEvents(newSaved);
   };
 
   return (
@@ -156,16 +155,21 @@ export default function Events() {
                   </div>
                 </div>
                 <p className="events-card-description">{event.description}</p>
-                <button className="events-register-button">Register Now</button>
-                <button
-                  className={`events-save-button ${
-                    savedEvents.has(event.id) ? 'saved' : ''
-                  }`}
-                  onClick={() => toggleSavedEvent(event.id)}
-                >
-                  <Bookmark size={16} />
-                  {savedEvents.has(event.id) ? 'Saved' : 'Save Event'}
-                </button>
+                <div className="events-card-actions">
+                  <button className="events-register-button">Register Now</button>
+                  {isAuthenticated && (
+                    <button
+                      className={`events-save-button ${
+                        userEvents.includes(event.id) ? 'saved' : ''
+                      }`}
+                      onClick={() => handleSaveEvent(event.id)}
+                      title={userEvents.includes(event.id) ? 'Remove from saved' : 'Save event'}
+                    >
+                      <Heart size={16} fill={userEvents.includes(event.id) ? 'currentColor' : 'none'} />
+                      {userEvents.includes(event.id) ? 'Saved' : 'Save Event'}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ))}

@@ -300,6 +300,12 @@
   overflow: hidden;
 }
 
+.events-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
 .events-register-button {
   width: 100%;
   background: linear-gradient(to right, #ea580c, #ec4899);
@@ -323,12 +329,11 @@
 
 .events-save-button {
   width: 100%;
-  margin-top: 0.5rem;
-  background: linear-gradient(to right, #ea580c, #ec4899);
-  color: white;
-  padding: 0.625rem;
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.1), rgba(236, 72, 153, 0.1));
+  color: var(--accent-orange, #ea580c);
+  border: 2px solid var(--accent-orange, #ea580c);
+  padding: 0.5rem;
   border-radius: 0.75rem;
-  border: none;
   font-weight: 600;
   cursor: pointer;
   transition: all 200ms ease;
@@ -339,16 +344,38 @@
 }
 
 .dark .events-save-button {
-  background: linear-gradient(to right, #ff6b4a, #ff8c42);
+  background: linear-gradient(135deg, rgba(255, 107, 74, 0.15), rgba(255, 140, 66, 0.15));
+  color: #ff8c42;
+  border-color: #ff8c42;
 }
 
 .events-save-button:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #ea580c, #ec4899);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
   transform: translateY(-2px);
 }
 
+.dark .events-save-button:hover {
+  background: linear-gradient(135deg, #ff6b4a, #ff8c42);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.4);
+}
+
 .events-save-button.saved {
-  opacity: 0.6;
+  background: linear-gradient(135deg, #ea580c, #ec4899);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+}
+
+.dark .events-save-button.saved {
+  background: linear-gradient(135deg, #ff6b4a, #ff8c42);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.4);
 }
 
 /* No Results */
