@@ -213,9 +213,8 @@ export default function ForumTopicDetail() {
       }
 
       // Try Firebase - load from global collection
-      if (true) {  // Always try to load from global Firebase
-        try {
-          const topicRef = doc(db, 'forumTopics', id);
+      try {
+        const topicRef = doc(db, 'forumTopics', id);
           
           const unsubscribe = onSnapshot(topicRef, (docSnap) => {
             if (docSnap.exists()) {
@@ -238,9 +237,6 @@ export default function ForumTopicDetail() {
         } catch {
           setLoading(false);
         }
-      } else {
-        setLoading(false);
-      }
     };
 
     loadTopic();

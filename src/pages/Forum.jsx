@@ -348,9 +348,12 @@ export default function Forum() {
           timestamp: new Date()
         });
         savedToFirebase = true;
+        console.log('Topic saved to Firebase successfully');
       } catch (firebaseError) {
-        console.log('Firebase save failed, using local storage:', firebaseError.code);
+        console.error('Firebase save failed:', firebaseError.code, firebaseError.message);
       }
+    } else {
+      console.log('No user logged in, skipping Firebase save');
     }
 
     // Always save to local storage as backup
