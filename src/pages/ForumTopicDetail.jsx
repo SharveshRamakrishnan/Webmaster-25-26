@@ -212,10 +212,10 @@ export default function ForumTopicDetail() {
         setLoading(false);
       }
 
-      // Try Firebase (under user's document)
-      if (user?.uid) {
+      // Try Firebase - load from global collection
+      if (true) {  // Always try to load from global Firebase
         try {
-          const topicRef = doc(db, 'users', user.uid, 'forumTopics', id);
+          const topicRef = doc(db, 'forumTopics', id);
           
           const unsubscribe = onSnapshot(topicRef, (docSnap) => {
             if (docSnap.exists()) {

@@ -101,29 +101,27 @@ export default function Blog() {
       const localPosts = getLocalPosts();
       setBlogPosts([...localPosts, ...defaultBlogPosts]);
       
-      // Try Firebase (under user's document to avoid permissions issues)
-      if (user?.uid) {
-        try {
-          const userPostsRef = collection(db, 'users', user.uid, 'blogPosts');
-          const q = query(userPostsRef, orderBy('date', 'desc'));
+      // Try Firebase - load from global collection
+      try {
+        const postsRef = collection(db, 'blogPosts');
+        const q = query(postsRef, orderBy('date', 'desc'));
+        
+        unsubscribe = onSnapshot(q, (snapshot) => {
+          const firebasePosts = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            date: doc.data().date?.toDate() || new Date(),
+            isUserPost: true
+          }));
           
-          unsubscribe = onSnapshot(q, (snapshot) => {
-            const firebasePosts = snapshot.docs.map(doc => ({
-              id: doc.id,
-              ...doc.data(),
-              date: doc.data().date?.toDate() || new Date(),
-              isUserPost: true
-            }));
-            
-            // Combine: user's Firebase posts + local posts + defaults
-            const allPosts = [...firebasePosts, ...localPosts.filter(p => !firebasePosts.find(fp => fp.id === p.id)), ...defaultBlogPosts];
-            setBlogPosts(allPosts);
-          }, (error) => {
-            console.log('Firebase unavailable, using local storage:', error.code);
-          });
-        } catch (error) {
-          console.log('Firebase setup error:', error);
-        }
+          // Combine: user's Firebase posts + local posts + defaults
+          const allPosts = [...firebasePosts, ...localPosts.filter(p => !firebasePosts.find(fp => fp.id === p.id)), ...defaultBlogPosts];
+          setBlogPosts(allPosts);
+        }, (error) => {
+          console.log('Firebase unavailable, using local storage:', error.code);
+        });
+      } catch (error) {
+        console.log('Firebase setup error:', error);
       }
     };
 
@@ -198,12 +196,12 @@ export default function Blog() {
         comments: []
       };
 
-      // Try to save to Firebase under user's document
+      // Try to save to Firebase in global collection
       let savedToFirebase = false;
       if (user?.uid) {
         try {
-          const userPostsRef = collection(db, 'users', user.uid, 'blogPosts');
-          await addDoc(userPostsRef, {
+          const postsRef = collection(db, 'blogPosts');
+          await addDoc(postsRef, {
             ...postData,
             date: new Date() // Firestore will convert this
           });

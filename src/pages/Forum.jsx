@@ -234,32 +234,30 @@ export default function Forum() {
       const localTopics = getLocalTopics();
       setTopics([...localTopics, ...defaultTopics]);
       
-      // Try Firebase if user is logged in
-      if (user?.uid) {
-        try {
-          const topicsRef = collection(db, 'users', user.uid, 'forumTopics');
-          const q = query(topicsRef, orderBy('timestamp', 'desc'));
+      // Try Firebase - load from global collection
+      try {
+        const topicsRef = collection(db, 'forumTopics');
+        const q = query(topicsRef, orderBy('timestamp', 'desc'));
+        
+        unsubscribe = onSnapshot(q, (snapshot) => {
+          const firebaseTopics = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            timestamp: doc.data().timestamp?.toDate() || new Date()
+          }));
           
-          unsubscribe = onSnapshot(q, (snapshot) => {
-            const firebaseTopics = snapshot.docs.map(doc => ({
-              id: doc.id,
-              ...doc.data(),
-              timestamp: doc.data().timestamp?.toDate() || new Date()
-            }));
-            
-            // Combine: Firebase topics + local topics (avoiding duplicates) + defaults
-            const allTopics = [
-              ...firebaseTopics, 
-              ...localTopics.filter(lt => !firebaseTopics.find(ft => ft.id === lt.id)),
-              ...defaultTopics
-            ];
-            setTopics(allTopics);
-          }, (error) => {
-            console.log('Firebase unavailable, using local storage:', error.code);
-          });
-        } catch (error) {
-          console.log('Firebase setup error:', error);
-        }
+          // Combine: Firebase topics + local topics (avoiding duplicates) + defaults
+          const allTopics = [
+            ...firebaseTopics, 
+            ...localTopics.filter(lt => !firebaseTopics.find(ft => ft.id === lt.id)),
+            ...defaultTopics
+          ];
+          setTopics(allTopics);
+        }, (error) => {
+          console.log('Firebase unavailable, using local storage:', error.code);
+        });
+      } catch (error) {
+        console.log('Firebase setup error:', error);
       }
     };
 
@@ -340,12 +338,12 @@ export default function Forum() {
       trending: false
     };
 
-    // Try to save to Firebase under user's document
+    // Try to save to Firebase in global collection
     let savedToFirebase = false;
     if (user?.uid) {
       try {
-        const userTopicsRef = collection(db, 'users', user.uid, 'forumTopics');
-        await addDoc(userTopicsRef, {
+        const topicsRef = collection(db, 'forumTopics');
+        await addDoc(topicsRef, {
           ...topicData,
           timestamp: new Date()
         });
