@@ -1140,6 +1140,7 @@
 .forum-form-group select,
 .forum-form-group textarea {
   width: 100%;
+  max-width: 500px;
   padding: 0.875rem 1rem;
   border: 2px solid var(--border-color);
   border-radius: 10px;
@@ -1147,6 +1148,8 @@
   color: var(--text-primary);
   background: var(--card-bg);
   transition: border-color 0.3s ease;
+  margin: 0 auto;
+  display: block;
 }
 
 .forum-form-group input:focus,
