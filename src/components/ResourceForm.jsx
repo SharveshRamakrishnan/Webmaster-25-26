@@ -88,9 +88,8 @@ export default function ResourceForm(){
       setFormData({firstName: '', lastName: '', resourceName: '', website: '', category: '', description: ''});
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
-    } catch (err) {
+    } catch {
       setError('Failed to submit resource. Please try again.');
-      console.error('Form submission error:', err.message);
     } finally {
       setIsSubmitting(false);
     }

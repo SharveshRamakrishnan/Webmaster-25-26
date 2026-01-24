@@ -37,7 +37,7 @@ const getLocalPosts = () => {
       return posts.map(p => ({ ...p, date: new Date(p.date) }));
     }
   } catch {
-    console.log('Error reading local storage');
+    // Error reading local storage
   }
   return [];
 };
@@ -47,7 +47,7 @@ const saveLocalPosts = (posts) => {
   try {
     localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(posts));
   } catch {
-    console.log('Error saving to local storage');
+    // Error saving to local storage
   }
 };
 
@@ -137,11 +137,11 @@ export default function Blog() {
           firebasePosts.forEach(p => allPostsMap.set(p.id, p));
           
           setBlogPosts(Array.from(allPostsMap.values()));
-        }, (error) => {
-          console.log('Firebase unavailable, using local storage:', error.code);
+        }, () => {
+          // Firebase unavailable, using local storage
         });
-      } catch (error) {
-        console.log('Firebase setup error:', error);
+      } catch {
+        // Firebase setup error
       }
     };
 
@@ -226,8 +226,8 @@ export default function Blog() {
             date: new Date() // Firestore will convert this
           });
           savedToFirebase = true;
-        } catch (firebaseError) {
-          console.log('Firebase save failed, using local storage:', firebaseError.code);
+        } catch {
+          // Firebase save failed, using local storage
         }
       }
 
@@ -241,8 +241,7 @@ export default function Blog() {
       setNewPost({ title: '', excerpt: '', content: '', category: 'Community', imageUrl: '' });
       setShowCreateModal(false);
       alert(savedToFirebase ? 'Blog post published successfully!' : 'Blog post saved locally!');
-    } catch (error) {
-      console.error('Error creating post:', error);
+    } catch {
       alert('Error creating post. Please try again.');
     } finally {
       setIsSubmitting(false);

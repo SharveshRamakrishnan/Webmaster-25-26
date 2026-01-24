@@ -20,16 +20,13 @@ export function ResourceProvider({ children }) {
     try {
       setLoading(true);
       const userDocRef = doc(db, 'users', uid);
-      console.log('Fetching user data from Firebase:', uid);
       const userDoc = await getDoc(userDocRef);
       
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        console.log('User document found, data:', userData);
         setSavedItems(userData.savedItems || []);
         setUserEvents(userData.userEvents || []);
       } else {
-        console.log('User document does not exist, creating new one');
         // Create user doc if it doesn't exist - use merge to not overwrite
         await setDoc(userDocRef, {
           email: user?.email || '',
@@ -40,8 +37,8 @@ export function ResourceProvider({ children }) {
         setSavedItems([]);
         setUserEvents([]);
       }
-    } catch (error) {
-      console.error('Error loading user data:', error);
+    } catch {
+      // Silent fail
     } finally {
       setLoading(false);
     }
@@ -50,10 +47,8 @@ export function ResourceProvider({ children }) {
   // Load saved items and user events from Firestore
   useEffect(() => {
     if (user?.uid) {
-      console.log('User logged in, loading data:', user.uid);
       loadUserData(user.uid);
     } else {
-      console.log('User not logged in, clearing data');
       setSavedItems([]);
       setUserEvents([]);
     }
@@ -62,7 +57,6 @@ export function ResourceProvider({ children }) {
   const toggleSavedItem = async (resourceId) => {
     try {
       if (!user?.uid) {
-        console.warn('Cannot save - user not authenticated');
         return;
       }
 
@@ -73,21 +67,15 @@ export function ResourceProvider({ children }) {
         ? savedItems.filter(itemId => itemId !== id)
         : [...savedItems, id];
       
-      console.log('Toggling saved item:', { id, isSaved, newSavedItems, userId: user.uid });
-      
       // Update state immediately for UI feedback
       setSavedItems(newSavedItems);
       
       // Use setDoc with merge to create doc if it doesn't exist or update if it does
       const userDocRef = doc(db, 'users', user.uid);
-      console.log('Saving to Firebase with setDoc merge:', { savedItems: newSavedItems });
       await setDoc(userDocRef, { savedItems: newSavedItems }, { merge: true });
-      console.log('Successfully persisted to Firebase');
       
-    } catch (error) {
-      console.error('Error toggling saved item:', error.message, error.code);
+    } catch {
       // Reload from Firebase to ensure consistency
-      console.log('Error occurred, reloading data from Firebase');
       if (user?.uid) {
         loadUserData(user.uid);
       }
@@ -108,8 +96,8 @@ export function ResourceProvider({ children }) {
         // Use setDoc with merge to create doc if it doesn't exist
         await setDoc(userDocRef, { userEvents: newUserEvents }, { merge: true });
       }
-    } catch (error) {
-      console.error('Error toggling user event:', error);
+    } catch {
+      // Silent fail
     }
   };
 

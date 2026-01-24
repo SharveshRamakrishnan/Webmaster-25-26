@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, CheckCircle } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, CheckCircle, AlertCircle, X } from 'lucide-react';
 import '../css/login.css';
 import { auth, googleProvider } from '../../build/auth';
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
 
 /**
  * Login Page Component
@@ -15,9 +15,13 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [resetSent, setResetSent] = useState(false);
   const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
@@ -26,7 +30,13 @@ export default function Login() {
     
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log('Google sign-in successful:', result.user.email);
+      
+      // Save remember me preference
+      if (rememberMe) {
+        localStorage.setItem('rememberMe', 'true');
+      } else {
+        localStorage.removeItem('rememberMe');
+      }
       
       // Show success animation
       setSuccess(true);
@@ -37,7 +47,6 @@ export default function Login() {
         navigate('/');
       }, 1500);
     } catch (error) {
-      console.error('Google sign-in error:', error);
       
       const errorMessages = {
         'auth/popup-closed-by-user': 'Sign-in was cancelled',
@@ -47,6 +56,36 @@ export default function Login() {
       
       const friendlyError = errorMessages[error.code] || error.message;
       setError(friendlyError);
+      setLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    if (!forgotEmail) {
+      setError('Please enter your email address');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      await sendPasswordResetEmail(auth, forgotEmail);
+      setResetSent(true);
+      setForgotEmail('');
+      setTimeout(() => {
+        setShowForgotPassword(false);
+        setResetSent(false);
+      }, 3000);
+    } catch (error) {
+      const errorMessages = {
+        'auth/user-not-found': 'No account found with this email address',
+        'auth/invalid-email': 'Invalid email address',
+        'auth/too-many-requests': 'Too many requests. Please try again later',
+      };
+      setError(errorMessages[error.code] || error.message);
+    } finally {
       setLoading(false);
     }
   };
@@ -78,7 +117,15 @@ export default function Login() {
     try {
       // Attempt Firebase login
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log('Login successful:', userCredential.user.email);
+      
+      // Save remember me preference
+      if (rememberMe) {
+        localStorage.setItem('rememberMe', 'true');
+        localStorage.setItem('rememberEmail', email);
+      } else {
+        localStorage.removeItem('rememberMe');
+        localStorage.removeItem('rememberEmail');
+      }
       
       // Show success animation
       setSuccess(true);
@@ -89,7 +136,6 @@ export default function Login() {
         navigate('/');
       }, 1500);
     } catch (error) {
-      console.error('Login error:', error);
       
       // Map Firebase error codes to friendly messages
       const errorMessages = {
@@ -170,12 +216,23 @@ export default function Login() {
               {/* Remember me checkbox and forgot password link */}
               <div className="form-options">
                 <label className="remember-me">
-                  <input type="checkbox" />
+                  <input 
+                    type="checkbox" 
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
                   Remember me
                 </label>
-                <a href="#forgot" className="forgot-password">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowForgotPassword(true);
+                    setError('');
+                  }}
+                  className="forgot-password"
+                >
                   Forgot password?
-                </a>
+                </button>
               </div>
 
               {/* Main submit button - shows loading state during login */}
@@ -211,6 +268,76 @@ export default function Login() {
           </>
         )}
       </div>
+
+      {/* Forgot Password Modal */}
+      {showForgotPassword && (
+        <div className="forgot-password-modal-overlay" onClick={() => setShowForgotPassword(false)}>
+          <div className="forgot-password-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="forgot-password-header">
+              <h2>Reset Your Password</h2>
+              <button 
+                onClick={() => setShowForgotPassword(false)}
+                className="forgot-close-btn"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {resetSent ? (
+              <div className="forgot-success-message">
+                <CheckCircle size={48} className="success-icon" />
+                <h3>Check Your Email</h3>
+                <p>We've sent a password reset link to <strong>{forgotEmail}</strong></p>
+                <p className="forgot-subtitle">Follow the link in your email to reset your password</p>
+              </div>
+            ) : (
+              <form onSubmit={handleForgotPassword} className="forgot-password-form">
+                {error && (
+                  <div className="forgot-error-message">
+                    <AlertCircle size={20} />
+                    {error}
+                  </div>
+                )}
+
+                <div className="form-group">
+                  <label htmlFor="forgot-email">Email Address</label>
+                  <div className="input-wrapper">
+                    <Mail className="input-icon" size={20} />
+                    <input
+                      type="email"
+                      id="forgot-email"
+                      placeholder="Enter your email address"
+                      value={forgotEmail}
+                      onChange={(e) => setForgotEmail(e.target.value)}
+                      className="form-input"
+                    />
+                  </div>
+                </div>
+
+                <p className="forgot-subtitle">
+                  We'll send you an email with instructions to reset your password.
+                </p>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="login-button"
+                >
+                  {loading ? 'Sending...' : 'Send Reset Link'}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowForgotPassword(false)}
+                  className="forgot-cancel-btn"
+                >
+                  Back to Login
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

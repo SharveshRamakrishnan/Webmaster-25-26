@@ -100,6 +100,25 @@ service cloud.firestore {
       allow delete: if isAuthenticated() && resource.data.uid == request.auth.uid;
     }
     
+    // Contact submissions collection - anyone can create, only read protected
+    match /contactSubmissions/{submissionId} {
+      allow create: if request.resource.data.name is string &&
+                       request.resource.data.email is string &&
+                       request.resource.data.subject is string &&
+                       request.resource.data.message is string &&
+                       request.resource.data.timestamp is timestamp &&
+                       request.resource.data.name.size() > 0 &&
+                       request.resource.data.name.size() <= 100 &&
+                       request.resource.data.email.size() > 0 &&
+                       request.resource.data.email.size() <= 100 &&
+                       request.resource.data.subject.size() > 0 &&
+                       request.resource.data.subject.size() <= 100 &&
+                       request.resource.data.message.size() >= 10 &&
+                       request.resource.data.message.size() <= 5000;
+      allow read: if false; // Admin only
+      allow update, delete: if false; // Prevent modification after submission
+    }
+    
     // Deny access to everything else by default
     match /{document=**} {
       allow read, write: if false;

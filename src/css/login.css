@@ -484,3 +484,167 @@
 .dark .login-footer a {
   color: var(--accent-orange);
 }
+/* Forgot Password Modal Styles */
+.forgot-password-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.forgot-password-modal {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  animation: slideIn 0.4s ease-out;
+}
+
+.forgot-password-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.forgot-password-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.forgot-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.forgot-close-btn:hover {
+  color: var(--text-primary);
+}
+
+.forgot-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.forgot-error-message {
+  background: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.forgot-error-message svg {
+  flex-shrink: 0;
+}
+
+.forgot-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.forgot-success-message {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.forgot-success-message .success-icon {
+  color: #10b981;
+  margin-bottom: 16px;
+}
+
+.forgot-success-message h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 12px 0;
+}
+
+.forgot-success-message p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.forgot-cancel-btn {
+  background: transparent;
+  border: 2px solid var(--text-tertiary);
+  color: var(--text-primary);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.forgot-cancel-btn:hover {
+  background: var(--bg-secondary);
+  border-color: var(--text-secondary);
+}
+
+.forgot-cancel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Dark mode support for forgot password modal */
+.dark .forgot-password-modal {
+  background: var(--bg-primary);
+}
+
+.dark .forgot-password-header h2 {
+  color: var(--text-primary);
+}
+
+.dark .forgot-error-message {
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.3);
+  color: #fca5a5;
+}
+
+.dark .forgot-cancel-btn {
+  border-color: var(--text-tertiary);
+  color: var(--text-primary);
+}
+
+.dark .forgot-cancel-btn:hover {
+  background: var(--bg-secondary);
+  border-color: var(--text-secondary);
+}

@@ -32,7 +32,7 @@ const saveLocalTopics = (topics) => {
   try {
     localStorage.setItem(TOPICS_STORAGE_KEY, JSON.stringify(topics));
   } catch {
-    console.log('Error saving topics');
+    // Error saving topics
   }
 };
 
@@ -49,7 +49,7 @@ const saveLocalPolls = (polls) => {
   try {
     localStorage.setItem(POLLS_STORAGE_KEY, JSON.stringify(polls));
   } catch {
-    console.log('Error saving polls');
+    // Error saving polls
   }
 };
 
@@ -66,7 +66,7 @@ const saveBookmarks = (bookmarks) => {
   try {
     localStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(bookmarks));
   } catch {
-    console.log('Error saving bookmarks');
+    // Error saving bookmarks
   }
 };
 
@@ -270,11 +270,11 @@ export default function Forum() {
           firebaseTopics.forEach(t => allTopicsMap.set(t.id, t));
           
           setTopics(Array.from(allTopicsMap.values()));
-        }, (error) => {
-          console.log('Firebase unavailable, using local storage:', error.code);
+        }, () => {
+          // Firebase unavailable, using local storage
         });
-      } catch (error) {
-        console.log('Firebase setup error:', error);
+      } catch {
+        // Firebase setup error
       }
     };
 
@@ -365,12 +365,9 @@ export default function Forum() {
           timestamp: new Date()
         });
         savedToFirebase = true;
-        console.log('Topic saved to Firebase successfully');
-      } catch (firebaseError) {
-        console.error('Firebase save failed:', firebaseError.code, firebaseError.message);
+      } catch {
+        // Firebase save failed
       }
-    } else {
-      console.log('No user logged in, skipping Firebase save');
     }
 
     // Always save to local storage as backup

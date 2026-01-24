@@ -43,7 +43,7 @@ const saveLocalReplies = (topicId, replies) => {
     all[topicId] = replies;
     localStorage.setItem(REPLIES_STORAGE_KEY, JSON.stringify(all));
   } catch {
-    console.log('Error saving replies');
+    // Error saving replies
   }
 };
 
@@ -60,7 +60,7 @@ const saveBookmarks = (bookmarks) => {
   try {
     localStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(bookmarks));
   } catch {
-    console.log('Error saving bookmarks');
+    // Error saving bookmarks
   }
 };
 
@@ -344,7 +344,7 @@ export default function ForumTopicDetail() {
           url: url
         });
       } catch {
-        console.log('Share cancelled');
+        // Share cancelled
       }
     } else {
       navigator.clipboard.writeText(url);

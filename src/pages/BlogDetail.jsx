@@ -118,8 +118,8 @@ export default function BlogDetail() {
             }
           }
           setLoading(false);
-        }, (error) => {
-          console.log('Firebase unavailable, checking local storage:', error.code);
+        }, () => {
+          // Firebase unavailable, checking local storage
           // Try local storage as fallback
           const localPosts = getLocalPosts();
           const localPost = localPosts.find(p => p.id === id);
@@ -137,8 +137,7 @@ export default function BlogDetail() {
         });
 
         return () => unsubscribe();
-      } catch (error) {
-        console.error('Error loading post:', error);
+      } catch {
         // Final fallback to local storage
         const localPosts = getLocalPosts();
         const localPost = localPosts.find(p => p.id === id);
@@ -183,8 +182,7 @@ export default function BlogDetail() {
         await updateDoc(postRef, {
           likes: newLiked ? likesCount + 1 : likesCount - 1
         });
-      } catch (error) {
-        console.error('Error updating likes:', error);
+      } catch {
         // Revert on error
         setLiked(!newLiked);
         setLikesCount(prev => newLiked ? prev - 1 : prev + 1);
@@ -222,8 +220,7 @@ export default function BlogDetail() {
         await updateDoc(postRef, {
           comments: arrayUnion(commentData)
         });
-      } catch (error) {
-        console.error('Error adding comment:', error);
+      } catch {
         // Revert on error
         setComments(prev => prev.filter(c => c.id !== commentData.id));
         alert('Error posting comment. Please try again.');
@@ -243,7 +240,7 @@ export default function BlogDetail() {
           url: url
         });
       } catch {
-        console.log('Share cancelled');
+        // Share cancelled
       }
     } else {
       navigator.clipboard.writeText(url);

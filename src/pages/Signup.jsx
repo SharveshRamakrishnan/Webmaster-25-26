@@ -56,8 +56,7 @@ export default function Signup() {
 
         }
         catch(error){
-            console.error('Signup error:', error);
-            
+
             // Map Firebase error codes to friendly messages
             const errorMessages = {
                 'auth/email-already-in-use': 'This email is already registered. Please login or use a different email',
@@ -79,7 +78,6 @@ export default function Signup() {
         
         try {
             const result = await signInWithPopup(auth, googleProvider);
-            console.log('Google sign-up successful:', result.user.email);
             setLoading(false);
             
             // Redirect to home after successful Google signup
@@ -88,8 +86,6 @@ export default function Signup() {
             }, 1000);
         } 
         catch(error){
-            console.error('Google sign-up error:', error);
-            
             const errorMessages = {
                 'auth/popup-closed-by-user': 'Sign-up was cancelled',
                 'auth/popup-blocked': 'Sign-up popup was blocked. Please enable popups.',
