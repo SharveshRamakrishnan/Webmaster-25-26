@@ -304,6 +304,7 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  background-color: transparent;
 }
 
 @media (min-width: 640px) {
@@ -326,12 +327,18 @@
 }
 
 .cta-btn-primary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.dark .cta-btn-primary {
   background: white;
-  color: var(--accent-orange);
+  color: #ff6b4a;
 }
 
 .cta-btn-primary:hover {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -394,7 +401,7 @@
 }
 
 .dark .about-cta {
-  background: linear-gradient(to bottom right, #ff6b4a, #ec4899, #a855f7) !important;
+  background: #16213e !important;
 }
 
 .dark .value-card,
