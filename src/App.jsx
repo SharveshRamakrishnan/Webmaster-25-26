@@ -30,17 +30,11 @@ const Forum = lazy(() => import('./pages/Forum'));
 const ForumTopicDetail = lazy(() => import('./pages/ForumTopicDetail'));
 const NewForumTopic = lazy(() => import('./pages/NewForumTopic'));
 
-// Loading fallback component
+// Loading fallback component with spinner
 const PageLoader = () => (
-  <div style={{ 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    minHeight: '50vh',
-    fontSize: '1.1rem',
-    color: '#64748b'
-  }}>
-    Loading...
+  <div className="page-loader">
+    <div className="page-loader-spinner"></div>
+    <p className="page-loader-text">Loading...</p>
   </div>
 );
 

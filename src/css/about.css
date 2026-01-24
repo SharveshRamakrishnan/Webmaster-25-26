@@ -224,12 +224,21 @@
   padding: 30px;
   text-align: center;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .team-card:hover {
   transform: translateY(-8px);
   border-color: var(--accent-orange);
   box-shadow: 0 12px 24px var(--shadow);
+}
+
+.team-card:hover h3 {
+  color: var(--accent-orange);
+}
+
+.team-card:active {
+  transform: translateY(-4px);
 }
 
 .team-avatar {

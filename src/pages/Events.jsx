@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Calendar, Clock, MapPin, Users, Bookmark, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Calendar, Clock, MapPin, Users, Bookmark, Heart, SearchX } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
@@ -80,10 +81,21 @@ const eventData = [
 const categories = ['All', 'Community', 'Volunteering', 'Health', 'Education', 'Social', 'Business'];
 
 export default function Events() {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const { userEvents, toggleUserEvent } = useResources();
   const { isAuthenticated } = useAuth();
+
+  // Calculate category counts
+  const categoryCounts = categories.reduce((acc, cat) => {
+    if (cat === 'All') {
+      acc[cat] = eventData.length;
+    } else {
+      acc[cat] = eventData.filter(e => e.category === cat).length;
+    }
+    return acc;
+  }, {});
 
   const filteredEvents = eventData
     .filter(event => selectedCategory === 'All' || event.category === selectedCategory)
@@ -97,6 +109,20 @@ export default function Events() {
     if (isAuthenticated) {
       toggleUserEvent(eventId);
     }
+  };
+
+  const handleRegister = (event) => {
+    // Open registration in new tab (placeholder - can be replaced with modal or actual registration)
+    alert(`Registration for "${event.name}" coming soon! Check back later.`);
+  };
+
+  const clearFilters = () => {
+    setSelectedCategory('All');
+    setSearchQuery('');
+  };
+
+  const openCalendar = () => {
+    navigate('/calendar');
   };
 
   return (
@@ -122,6 +148,7 @@ export default function Events() {
           categories={categories}
           selected={selectedCategory}
           onChange={setSelectedCategory}
+          counts={categoryCounts}
         />
 
         {/* Events Grid */}
@@ -156,7 +183,12 @@ export default function Events() {
                 </div>
                 <p className="events-card-description">{event.description}</p>
                 <div className="events-card-actions">
-                  <button className="events-register-button">Register Now</button>
+                  <button 
+                    className="events-register-button"
+                    onClick={() => handleRegister(event)}
+                  >
+                    Register Now
+                  </button>
                   {isAuthenticated && (
                     <button
                       className={`events-save-button ${
@@ -177,7 +209,14 @@ export default function Events() {
 
         {filteredEvents.length === 0 && (
           <div className="events-no-results">
-            <p>No events found matching your criteria.</p>
+            <div className="events-no-results-icon">
+              <SearchX size={40} />
+            </div>
+            <h3>No Events Found</h3>
+            <p>We couldn't find any events matching your criteria. Try adjusting your filters or search term.</p>
+            <button className="events-no-results-btn" onClick={clearFilters}>
+              Clear All Filters
+            </button>
           </div>
         )}
       </div>
@@ -190,7 +229,7 @@ export default function Events() {
           <p className="events-cta-description">
             See all upcoming events in a monthly calendar view and add them to your personal calendar
           </p>
-          <button className="events-cta-button">Open Calendar View</button>
+          <button className="events-cta-button" onClick={openCalendar}>Open Calendar View</button>
         </div>
       </section>
     </div>

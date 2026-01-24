@@ -327,8 +327,52 @@
 .blog-empty-state {
   text-align: center;
   padding: clamp(48px, 8vw, 64px) clamp(16px, 4vw, 32px);
-  color: var(--text-tertiary, #999);
-  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.blog-empty-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-orange, #fb923c);
+}
+
+.blog-empty-state h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  margin: 0;
+}
+
+.blog-empty-state p {
+  color: var(--text-secondary, #6b7280);
+  font-size: 1rem;
+  margin: 0;
+  max-width: 400px;
+}
+
+.blog-empty-btn {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--btn-gradient);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.blog-empty-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--btn-shadow);
 }
 
 /* Newsletter Section */

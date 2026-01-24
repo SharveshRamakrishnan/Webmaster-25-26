@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, User, Clock, TrendingUp, Plus, X, Send, Image } from 'lucide-react';
+import { Calendar, User, Clock, TrendingUp, Plus, X, Send, Image, FileText } from 'lucide-react';
 import { collection, addDoc, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from '../../build/auth';
 import { useAuth } from '../context/AuthContext';
@@ -384,7 +384,14 @@ export default function Blog() {
 
         {filteredPosts.length === 0 && (
           <div className="blog-empty-state">
-            <p>No articles found matching your criteria.</p>
+            <div className="blog-empty-icon">
+              <FileText size={40} />
+            </div>
+            <h3>No Articles Found</h3>
+            <p>We couldn&apos;t find any articles matching your search. Try adjusting your filters or be the first to write about this topic!</p>
+            <button className="blog-empty-btn" onClick={() => { setSelectedCategory('All'); setSearchQuery(''); }}>
+              Clear Filters
+            </button>
           </div>
         )}
 

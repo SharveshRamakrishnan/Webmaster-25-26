@@ -8,7 +8,8 @@
   text-align: left;
   display: flex;
   flex-direction: column;
-  min-height: 280px;
+  min-height: 240px;
+  height: 100%;
 }
 
 .card:hover {
@@ -137,4 +138,214 @@
 
 .dark .card p {
   color: #cbd5e1;
+}
+
+/* Resource Modal Styles */
+.resource-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+}
+
+.resource-modal {
+  background: var(--card-bg, white);
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 2rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.dark .resource-modal {
+  background: #1e293b;
+}
+
+.resource-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--bg-secondary, #f3f4f6);
+  border: none;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary, #6b7280);
+  transition: all 0.2s ease;
+}
+
+.resource-modal-close:hover {
+  background: var(--bg-tertiary, #e5e7eb);
+  color: var(--text-primary, #1f2937);
+}
+
+.dark .resource-modal-close {
+  background: #334155;
+  color: #94a3b8;
+}
+
+.dark .resource-modal-close:hover {
+  background: #475569;
+  color: #f1f5f9;
+}
+
+.resource-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.resource-modal-icon {
+  font-size: 2rem;
+}
+
+.resource-modal-category {
+  display: inline-block;
+  background: var(--bg-tertiary, #fff3e0);
+  color: var(--accent-orange, #ea580c);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dark .resource-modal-category {
+  background: #334155;
+  color: #ff8c42;
+}
+
+.resource-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary, #1f2937);
+  margin: 0 0 1rem 0;
+  line-height: 1.3;
+}
+
+.dark .resource-modal-title {
+  color: #f1f5f9;
+}
+
+.resource-modal-description {
+  color: var(--text-secondary, #6b7280);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+}
+
+.dark .resource-modal-description {
+  color: #94a3b8;
+}
+
+.resource-modal-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--bg-secondary, #f9fafb);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.dark .resource-modal-details {
+  background: #0f172a;
+}
+
+.resource-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.9rem;
+}
+
+.resource-detail-item svg {
+  color: var(--accent-orange, #ea580c);
+  flex-shrink: 0;
+}
+
+.resource-detail-item a {
+  color: var(--accent-orange, #ea580c);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.resource-detail-item a:hover {
+  text-decoration: underline;
+}
+
+.resource-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.resource-modal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  border: none;
+}
+
+.resource-modal-btn.primary {
+  background: var(--btn-gradient);
+  color: white;
+}
+
+.resource-modal-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--btn-shadow);
+}
+
+.resource-modal-btn.secondary {
+  background: var(--bg-secondary, #f3f4f6);
+  color: var(--text-primary, #374151);
+  border: 1px solid var(--border-color, #e5e7eb);
+}
+
+.resource-modal-btn.secondary:hover {
+  background: var(--bg-tertiary, #e5e7eb);
+}
+
+.resource-modal-btn.saved {
+  background: rgba(236, 72, 153, 0.1);
+  color: var(--accent-pink, #ec4899);
+  border: 1px solid var(--accent-pink, #ec4899);
+}
+
+.dark .resource-modal-btn.secondary {
+  background: #334155;
+  color: #f1f5f9;
+  border-color: #475569;
+}
+
+.dark .resource-modal-btn.secondary:hover {
+  background: #475569;
 }

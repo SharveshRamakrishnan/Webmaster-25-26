@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram } from 'lucide-react';
 import '../css/footer.css';
 
@@ -11,56 +12,56 @@ export default function Footer() {
     <footer id="contact" className="footer-root">
       <div className="footer-container">
         <div className="footer-grid">
-          <div>
+          <div className="footer-column">
             <div className="footer-brand">
               <div className="logo-circle">
                 <span className="logo-letter">C</span>
               </div>
               <span className="brand-name">Coppell Hub</span>
             </div>
-            <p className="text-gray-400 leading-relaxed">
+            <p className="footer-description">
               Connecting residents with local support, services, and opportunities to build a stronger community together.
             </p>
           </div>
 
-          <div>
-            <h4 className="text-white mb-4">Quick Links</h4>
-            <ul className="space-y-3">
+          <div className="footer-column">
+            <h4 className="footer-heading">Quick Links</h4>
+            <ul className="footer-links">
               <li>
-                <a href="#home" className="text-gray-400 hover:text-orange-400 transition-colors">Home</a>
+                <Link to="/" className="footer-link">Home</Link>
               </li>
               <li>
-                <a href="#directory" className="text-gray-400 hover:text-orange-400 transition-colors">Resource Directory</a>
+                <Link to="/resources" className="footer-link">Resource Directory</Link>
               </li>
               <li>
-                <a href="#highlights" className="text-gray-400 hover:text-orange-400 transition-colors">Highlights</a>
-              </li>
-              <li><a href="#submit" className="text-gray-400 hover:text-orange-400 transition-col
-                ors">Submit a Resource</a>
+                <Link to="/events" className="footer-link">Events</Link>
               </li>
               <li>
-                <a href="#map" onClick={(e) => { e.preventDefault(); openMap(); }} className="text-gray-400 hover:text-orange-400 transition-colors">Map</a>
+                <Link to="/submit-resource" className="footer-link">Submit a Resource</Link>
+              </li>
+              <li>
+                <button onClick={openMap} className="footer-link footer-link-btn">View Map</button>
               </li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-white mb-4">Resources</h4>
-            <ul className="space-y-3">
+          <div className="footer-column">
+            <h4 className="footer-heading">Resources</h4>
+            <ul className="footer-links">
               <li>
-                <a href="#" className="text-gray-400 hover:text-orange-400 transition-colors">About Us</a>
+                <Link to="/about" className="footer-link">About Us</Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-orange-400 transition-colors">FAQ</a>
+                <Link to="/blog" className="footer-link">Blog</Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-orange-400 transition-colors">Privacy Policy</a>
+                <Link to="/forum" className="footer-link">Community Forum</Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-orange-400 transition-colors">Terms of Service</a>
+                <Link to="/contact" className="footer-link">Contact Us</Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-orange-400 transition-colors">Accessibility</a>
+                <Link to="/references" className="footer-link">References</Link>
               </li>
             </ul>
           </div>

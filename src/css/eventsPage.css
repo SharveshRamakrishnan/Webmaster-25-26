@@ -199,6 +199,21 @@
   margin-bottom: 2rem;
 }
 
+/* Ultra-wide screens: max 4 columns */
+@media (min-width: 1600px) {
+  .events-grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1920px) {
+  .events-grid-container {
+    max-width: 1800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 @media (max-width: 768px) {
   .events-grid-container {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -365,11 +380,52 @@
 .events-no-results {
   text-align: center;
   padding: 4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.events-no-results-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-orange, #fb923c);
+}
+
+.events-no-results h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  margin: 0;
 }
 
 .events-no-results p {
-  color: #6b7280;
+  color: var(--text-secondary, #6b7280);
   font-size: 1rem;
+  margin: 0;
+  max-width: 400px;
+}
+
+.events-no-results-btn {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--btn-gradient);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.events-no-results-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--btn-shadow);
 }
 
 /* Calendar CTA Section */

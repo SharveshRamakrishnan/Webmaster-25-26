@@ -625,8 +625,7 @@ export default function Forum() {
                 </div>
               </div>
 
-              {/* Topics List */}
-              <div className="forum-topics-list">
+              {/* Topics List */}              {filteredTopics.length > 0 ? (              <div className="forum-topics-list">
                 {filteredTopics.map((topic) => (
                   <div 
                     key={topic.id} 
@@ -723,6 +722,18 @@ export default function Forum() {
                   </div>
                 ))}
               </div>
+              ) : (
+                <div className="forum-empty-state">
+                  <div className="forum-empty-icon">
+                    <MessageSquare size={40} />
+                  </div>
+                  <h3>No Discussions Found</h3>
+                  <p>No topics match your search criteria. Try different keywords or start a new discussion!</p>
+                  <button className="forum-empty-btn" onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }}>
+                    Clear Filters
+                  </button>
+                </div>
+              )}
 
               {/* Community Polls */}
               <div className="forum-polls-section">

@@ -624,10 +624,22 @@
 /* Logout Animation */
 .user-initials-btn.logging-out {
   animation: logoutFadeOut 0.5s ease-out forwards;
+  pointer-events: none;
 }
 
 .user-initials-btn-mobile.logging-out {
   animation: logoutFadeOut 0.5s ease-out forwards;
+  pointer-events: none;
+}
+
+.user-initials-btn.logging-out::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 2px solid transparent;
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: logoutSpin 0.5s linear;
 }
 
 @keyframes logoutFadeOut {
@@ -635,8 +647,21 @@
     opacity: 1;
     transform: scale(1) rotate(0deg);
   }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1) rotate(180deg);
+  }
   100% {
     opacity: 0;
     transform: scale(0.5) rotate(360deg);
+  }
+}
+
+@keyframes logoutSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

@@ -65,27 +65,44 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 80px;
+    padding: 0 1rem;
 }
 
 @media (min-width: 640px) {
     .hero-buttons {
         flex-direction: row;
+        padding: 0;
     }
 }
 
 .btn-explore {
     color: white;
-    padding: 16px 32px;
+    padding: 14px 28px;
     border-radius: 9999px;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     font-weight: 500;
     transition: all 0.3s ease;
     background: transparent;
     border: 2px solid white;
+    font-size: clamp(14px, 3.5vw, 16px);
+    white-space: nowrap;
+    min-width: 180px;
+    width: 100%;
+    max-width: 280px;
+}
+
+@media (min-width: 640px) {
+    .btn-explore {
+        width: auto;
+        min-width: auto;
+        max-width: none;
+        padding: 16px 32px;
+    }
 }
 
 .btn-explore:hover {
@@ -122,17 +139,24 @@
 }
 
 .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 70px;
-    max-width: 768px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    max-width: 900px;
     margin: 0 auto;
-    justify-items: center;
+    padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+    .hero-stats {
+        gap: 16px;
+    }
 }
 
 @media (max-width: 640px) {
     .hero-stats {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: center;
         gap: 16px;
     }
 }
@@ -141,10 +165,10 @@
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(8px);
     border-radius: 16px;
-    padding: 24px;
+    padding: 24px 40px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     text-align: center;
-    width: 100%;
+    min-width: 180px;
 }
 
 .stat-number {

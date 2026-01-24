@@ -197,7 +197,7 @@ export default function ResourceForm(){
               maxLength={5000}
               disabled={isSubmitting}
             ></textarea>
-            <small style={{color: '#666'}}>{formData.description.length}/5000 characters</small>
+            <div className="char-count">{formData.description.length}/5000</div>
           </div>
           <button type="submit" className="resource-form__submit" disabled={isSubmitting}>
             {isSubmitting ? 'Submitting...' : 'Submit Resource'}
