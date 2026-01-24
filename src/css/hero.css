@@ -74,8 +74,7 @@
 }
 
 .btn-explore {
-    background: white;
-    color: #ea580c;
+    color: white;
     padding: 16px 32px;
     border-radius: 9999px;
     border: none;
@@ -85,6 +84,8 @@
     gap: 8px;
     font-weight: 500;
     transition: all 0.3s ease;
+    background: transparent;
+    border: 2px solid white;
 }
 
 .btn-explore:hover {
