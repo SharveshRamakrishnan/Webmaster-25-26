@@ -183,6 +183,7 @@ export default function ForumTopicDetail() {
   useEffect(() => {
     const loadTopic = async () => {
       setLoading(true);
+      let firebaseLoaded = false;
       
       // Check bookmarks
       const bookmarks = getBookmarks();
@@ -197,54 +198,85 @@ export default function ForumTopicDetail() {
           const topicReplies = defaultReplies[id] || [];
           const localReplies = getLocalReplies(id);
           setReplies([...localReplies, ...topicReplies]);
+          setLoading(false);
+          return;
         }
+      }
+
+      // For topic-* IDs (local-only topics), check local storage
+      if (id.startsWith('topic-')) {
+        const localTopics = getLocalTopics();
+        const localTopic = localTopics.find(t => t.id === id);
+        if (localTopic) {
+          setTopic(localTopic);
+          setLikesCount(localTopic.likes || 0);
+          setReplies(getLocalReplies(id));
+          setLoading(false);
+          return;
+        }
+        // If not found locally, show not found (topic-* IDs are local-only)
+        setTopic(null);
         setLoading(false);
         return;
       }
 
-      // Try to load from local storage first
+      // For Firebase document IDs, try local storage first as cache
       const localTopics = getLocalTopics();
       const localTopic = localTopics.find(t => t.id === id);
       if (localTopic) {
         setTopic(localTopic);
         setLikesCount(localTopic.likes || 0);
         setReplies(getLocalReplies(id));
-        setLoading(false);
       }
 
-      // Try Firebase (under user's document)
-      if (user?.uid) {
-        try {
-          const topicRef = doc(db, 'users', user.uid, 'forumTopics', id);
-          
-          const unsubscribe = onSnapshot(topicRef, (docSnap) => {
-            if (docSnap.exists()) {
-              const data = docSnap.data();
-              setTopic({
-                id: docSnap.id,
-                ...data,
-                timestamp: data.timestamp?.toDate() || new Date()
-              });
-              setLikesCount(data.likes || 0);
-              setReplies(data.replies || []);
-            }
-            setLoading(false);
-          }, () => {
-            // If Firebase fails, we already have local data
-            setLoading(false);
-          });
-
-          return () => unsubscribe();
-        } catch {
+      // Try Firebase - load from global collection
+      try {
+        const topicRef = doc(db, 'forumTopics', id);
+        
+        const unsubscribe = onSnapshot(topicRef, (docSnap) => {
+          firebaseLoaded = true;
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            setTopic({
+              id: docSnap.id,
+              ...data,
+              timestamp: data.timestamp?.toDate() || new Date()
+            });
+            setLikesCount(data.likes || 0);
+            setReplies(data.replies || []);
+          } else if (!localTopic) {
+            // Only show "not found" if it's not in Firebase AND not in local storage
+            setTopic(null);
+          }
           setLoading(false);
-        }
-      } else {
+        }, () => {
+          // Firebase error - use local data if available
+          firebaseLoaded = true;
+          if (!localTopic) {
+            setTopic(null);
+          }
+          setLoading(false);
+        });
+
+        // Set a timeout to stop loading after 5 seconds if Firebase hasn't responded
+        const timeout = setTimeout(() => {
+          if (!firebaseLoaded && !localTopic) {
+            setTopic(null);
+            setLoading(false);
+          }
+        }, 5000);
+
+        return () => {
+          clearTimeout(timeout);
+          unsubscribe();
+        };
+      } catch {
         setLoading(false);
       }
     };
 
     loadTopic();
-  }, [id, user?.uid]);
+  }, [id]); // Only depend on id - data should load for everyone, not just logged in users
 
   const formatTimestamp = (date) => {
     const now = new Date();

@@ -99,31 +99,49 @@ export default function Blog() {
     const loadPosts = async () => {
       // First, load local posts immediately
       const localPosts = getLocalPosts();
-      setBlogPosts([...localPosts, ...defaultBlogPosts]);
       
-      // Try Firebase (under user's document to avoid permissions issues)
-      if (user?.uid) {
-        try {
-          const userPostsRef = collection(db, 'users', user.uid, 'blogPosts');
-          const q = query(userPostsRef, orderBy('date', 'desc'));
+      // Create a Map to ensure unique posts by ID
+      const postsMap = new Map();
+      
+      // Add defaults first (lowest priority)
+      defaultBlogPosts.forEach(p => postsMap.set(p.id, p));
+      
+      // Add local posts (higher priority - overwrites defaults)
+      localPosts.forEach(p => postsMap.set(p.id, p));
+      
+      setBlogPosts(Array.from(postsMap.values()));
+      
+      // Try Firebase - load from global collection (accessible to all users)
+      try {
+        const postsRef = collection(db, 'blogPosts');
+        const q = query(postsRef, orderBy('date', 'desc'));
+        
+        unsubscribe = onSnapshot(q, (snapshot) => {
+          const firebasePosts = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            date: doc.data().date?.toDate() || new Date(),
+            isFirebasePost: true
+          }));
           
-          unsubscribe = onSnapshot(q, (snapshot) => {
-            const firebasePosts = snapshot.docs.map(doc => ({
-              id: doc.id,
-              ...doc.data(),
-              date: doc.data().date?.toDate() || new Date(),
-              isUserPost: true
-            }));
-            
-            // Combine: user's Firebase posts + local posts + defaults
-            const allPosts = [...firebasePosts, ...localPosts.filter(p => !firebasePosts.find(fp => fp.id === p.id)), ...defaultBlogPosts];
-            setBlogPosts(allPosts);
-          }, (error) => {
-            console.log('Firebase unavailable, using local storage:', error.code);
-          });
-        } catch (error) {
-          console.log('Firebase setup error:', error);
-        }
+          // Create fresh Map for combining
+          const allPostsMap = new Map();
+          
+          // Add defaults first (lowest priority)
+          defaultBlogPosts.forEach(p => allPostsMap.set(p.id, p));
+          
+          // Add local posts (medium priority)
+          localPosts.forEach(p => allPostsMap.set(p.id, p));
+          
+          // Add Firebase posts (highest priority - overwrites others)
+          firebasePosts.forEach(p => allPostsMap.set(p.id, p));
+          
+          setBlogPosts(Array.from(allPostsMap.values()));
+        }, (error) => {
+          console.log('Firebase unavailable, using local storage:', error.code);
+        });
+      } catch (error) {
+        console.log('Firebase setup error:', error);
       }
     };
 
@@ -131,7 +149,7 @@ export default function Blog() {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [user?.uid]);
+  }, []); // No dependency on user - data should load for everyone
 
   const formatDate = (date) => {
     if (typeof date === 'string') return date;
@@ -165,7 +183,7 @@ export default function Blog() {
       alert('Please log in to create a blog post');
       return;
     }
-    setShowCreateModal(true);
+    navigate('/blog/write');
   };
 
   const handleSubmitPost = async (e) => {
@@ -198,12 +216,12 @@ export default function Blog() {
         comments: []
       };
 
-      // Try to save to Firebase under user's document
+      // Try to save to Firebase in global collection
       let savedToFirebase = false;
       if (user?.uid) {
         try {
-          const userPostsRef = collection(db, 'users', user.uid, 'blogPosts');
-          await addDoc(userPostsRef, {
+          const postsRef = collection(db, 'blogPosts');
+          await addDoc(postsRef, {
             ...postData,
             date: new Date() // Firestore will convert this
           });

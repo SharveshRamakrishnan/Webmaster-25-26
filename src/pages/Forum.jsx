@@ -232,34 +232,49 @@ export default function Forum() {
     const loadTopics = async () => {
       // First load local topics
       const localTopics = getLocalTopics();
-      setTopics([...localTopics, ...defaultTopics]);
       
-      // Try Firebase if user is logged in
-      if (user?.uid) {
-        try {
-          const topicsRef = collection(db, 'users', user.uid, 'forumTopics');
-          const q = query(topicsRef, orderBy('timestamp', 'desc'));
+      // Create a Map to ensure unique topics by ID
+      const topicsMap = new Map();
+      
+      // Add defaults first (lowest priority)
+      defaultTopics.forEach(t => topicsMap.set(t.id, t));
+      
+      // Add local topics (higher priority - overwrites defaults)
+      localTopics.forEach(t => topicsMap.set(t.id, t));
+      
+      setTopics(Array.from(topicsMap.values()));
+      
+      // Try Firebase - load from global collection (accessible to all users)
+      try {
+        const topicsRef = collection(db, 'forumTopics');
+        const q = query(topicsRef, orderBy('timestamp', 'desc'));
+        
+        unsubscribe = onSnapshot(q, (snapshot) => {
+          const firebaseTopics = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            timestamp: doc.data().timestamp?.toDate() || new Date(),
+            isFirebaseTopic: true
+          }));
           
-          unsubscribe = onSnapshot(q, (snapshot) => {
-            const firebaseTopics = snapshot.docs.map(doc => ({
-              id: doc.id,
-              ...doc.data(),
-              timestamp: doc.data().timestamp?.toDate() || new Date()
-            }));
-            
-            // Combine: Firebase topics + local topics (avoiding duplicates) + defaults
-            const allTopics = [
-              ...firebaseTopics, 
-              ...localTopics.filter(lt => !firebaseTopics.find(ft => ft.id === lt.id)),
-              ...defaultTopics
-            ];
-            setTopics(allTopics);
-          }, (error) => {
-            console.log('Firebase unavailable, using local storage:', error.code);
-          });
-        } catch (error) {
-          console.log('Firebase setup error:', error);
-        }
+          // Create fresh Map for combining
+          const allTopicsMap = new Map();
+          
+          // Add defaults first (lowest priority)
+          defaultTopics.forEach(t => allTopicsMap.set(t.id, t));
+          
+          // Add local topics (medium priority)
+          localTopics.forEach(t => allTopicsMap.set(t.id, t));
+          
+          // Add Firebase topics (highest priority - overwrites others)
+          firebaseTopics.forEach(t => allTopicsMap.set(t.id, t));
+          
+          setTopics(Array.from(allTopicsMap.values()));
+        }, (error) => {
+          console.log('Firebase unavailable, using local storage:', error.code);
+        });
+      } catch (error) {
+        console.log('Firebase setup error:', error);
       }
     };
 
@@ -267,7 +282,7 @@ export default function Forum() {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [user?.uid]);
+  }, []); // No dependency on user - data should load for everyone
 
   const formatTimestamp = (date) => {
     const now = new Date();
@@ -309,7 +324,7 @@ export default function Forum() {
       alert('Please log in to create a new topic');
       return;
     }
-    setShowNewTopicModal(true);
+    navigate('/forum/new-topic');
   };
 
   const handleSubmitTopic = async (e) => {
@@ -340,19 +355,22 @@ export default function Forum() {
       trending: false
     };
 
-    // Try to save to Firebase under user's document
+    // Try to save to Firebase in global collection
     let savedToFirebase = false;
     if (user?.uid) {
       try {
-        const userTopicsRef = collection(db, 'users', user.uid, 'forumTopics');
-        await addDoc(userTopicsRef, {
+        const topicsRef = collection(db, 'forumTopics');
+        await addDoc(topicsRef, {
           ...topicData,
           timestamp: new Date()
         });
         savedToFirebase = true;
+        console.log('Topic saved to Firebase successfully');
       } catch (firebaseError) {
-        console.log('Firebase save failed, using local storage:', firebaseError.code);
+        console.error('Firebase save failed:', firebaseError.code, firebaseError.message);
       }
+    } else {
+      console.log('No user logged in, skipping Firebase save');
     }
 
     // Always save to local storage as backup
