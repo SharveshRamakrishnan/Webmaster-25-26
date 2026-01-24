@@ -1,10 +1,32 @@
 import {useState} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
-import {Mail, Lock, Eye, EyeOff, User} from 'lucide-react';
+import {Mail, Lock, Eye, EyeOff, User, Check, X as XIcon} from 'lucide-react';
 import '../css/signup.css';
 import {auth, googleProvider } from "../../build/auth";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import { signInWithPopup } from "firebase/auth";
+
+// Password strength checker
+const getPasswordStrength = (password) => {
+    if (!password) return { score: 0, label: '', color: '' };
+    
+    let score = 0;
+    const checks = {
+        length: password.length >= 8,
+        lowercase: /[a-z]/.test(password),
+        uppercase: /[A-Z]/.test(password),
+        number: /[0-9]/.test(password),
+        special: /[^A-Za-z0-9]/.test(password),
+    };
+    
+    score = Object.values(checks).filter(Boolean).length;
+    
+    if (score <= 1) return { score, label: 'Weak', color: '#ef4444', checks };
+    if (score <= 2) return { score, label: 'Fair', color: '#f59e0b', checks };
+    if (score <= 3) return { score, label: 'Good', color: '#eab308', checks };
+    if (score <= 4) return { score, label: 'Strong', color: '#22c55e', checks };
+    return { score, label: 'Very Strong', color: '#10b981', checks };
+};
 
 
 export default function Signup() {
@@ -177,6 +199,37 @@ export default function Signup() {
                                 {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                             </button>
                         </div>
+                        {/* Password strength indicator */}
+                        {password && (
+                            <div className="password-strength">
+                                <div className="strength-bar-container">
+                                    <div 
+                                        className="strength-bar" 
+                                        style={{ 
+                                            width: `${(getPasswordStrength(password).score / 5) * 100}%`,
+                                            backgroundColor: getPasswordStrength(password).color 
+                                        }}
+                                    />
+                                </div>
+                                <span className="strength-label" style={{ color: getPasswordStrength(password).color }}>
+                                    {getPasswordStrength(password).label}
+                                </span>
+                                <div className="password-requirements">
+                                    <div className={`requirement ${getPasswordStrength(password).checks?.length ? 'met' : ''}`}>
+                                        {getPasswordStrength(password).checks?.length ? <Check size={12} /> : <XIcon size={12} />}
+                                        <span>8+ characters</span>
+                                    </div>
+                                    <div className={`requirement ${getPasswordStrength(password).checks?.uppercase ? 'met' : ''}`}>
+                                        {getPasswordStrength(password).checks?.uppercase ? <Check size={12} /> : <XIcon size={12} />}
+                                        <span>Uppercase</span>
+                                    </div>
+                                    <div className={`requirement ${getPasswordStrength(password).checks?.number ? 'met' : ''}`}>
+                                        {getPasswordStrength(password).checks?.number ? <Check size={12} /> : <XIcon size={12} />}
+                                        <span>Number</span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
 

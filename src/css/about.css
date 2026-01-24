@@ -7,12 +7,13 @@
 
 /* Hero Section - inherits from PageHero component */
 .about-hero {
-  background: linear-gradient(to bottom right, #ea580c, #ec4899, #9333ea) !important;
+  background: linear-gradient(to bottom right, #ea580c, #ec4899, #9333ea);
   margin-top: 0;
+  transition: background 0.3s ease;
 }
 
 .dark .about-hero {
-  background: linear-gradient(to bottom right, #1a2a4e, #16213e, #0f3460) !important;
+  background: linear-gradient(135deg, var(--accent-orange, #ff8c42) 0%, var(--accent-pink, #ec4899) 50%, var(--accent-purple, #a855f7) 100%);
 }
 
 /* Container */

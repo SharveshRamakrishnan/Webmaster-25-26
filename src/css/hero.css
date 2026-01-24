@@ -89,7 +89,8 @@
 }
 
 .btn-explore:hover {
-    background: #fef5f2;
+    background: white;
+    color: #ea580c;
     box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
 }

@@ -247,8 +247,13 @@
 .contact-success p {
   font-size: 16px;
   color: var(--text-secondary);
-  margin: 0;
+  margin: 0 0 24px 0;
   line-height: 1.6;
+}
+
+.send-another-btn {
+  margin-top: 24px;
+  max-width: 280px;
 }
 
 /* Dark mode support */

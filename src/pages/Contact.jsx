@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, X } from 'lucide-react';
 import '../css/pages.css';
 import '../css/contact.css';
 import { db } from '../../build/auth';
@@ -23,6 +23,8 @@ export default function Contact() {
       ...prev,
       [name]: value
     }));
+    // Clear error when user starts typing
+    if (error) setError('');
   };
 
   const validateForm = () => {
@@ -52,6 +54,11 @@ export default function Contact() {
       return false;
     }
     return true;
+  };
+
+  // Allow user to send another message
+  const handleSendAnother = () => {
+    setSuccess(false);
   };
 
   const handleSubmit = async (e) => {
@@ -86,11 +93,7 @@ export default function Contact() {
         subject: '',
         message: ''
       });
-
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        setSuccess(false);
-      }, 5000);
+      // Success message stays visible until user clicks to send another
     } catch (err) {
       setError('Failed to send message. Please try again later.');
     } finally {
@@ -132,6 +135,14 @@ export default function Contact() {
               <CheckCircle size={64} className="success-icon" />
               <h2>Message Sent!</h2>
               <p>Thank you for reaching out. We've received your message and will get back to you soon.</p>
+              <button 
+                onClick={handleSendAnother}
+                className="contact-submit-btn send-another-btn"
+                type="button"
+              >
+                <Send size={20} />
+                Send Another Message
+              </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="contact-form">

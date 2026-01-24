@@ -198,6 +198,66 @@
   background: linear-gradient(135deg, #1a2a4e 0%, #0f172a 100%);
 }
 
+/* Password Strength Indicator */
+.password-strength {
+  margin-top: 8px;
+}
+
+.strength-bar-container {
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.strength-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.strength-label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.password-requirements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.requirement {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.requirement.met {
+  color: #22c55e;
+}
+
+.requirement svg {
+  flex-shrink: 0;
+}
+
+/* Dark mode */
+.dark .strength-bar-container {
+  background: var(--bg-tertiary);
+}
+
+.dark .requirement {
+  color: var(--text-tertiary);
+}
+
+.dark .requirement.met {
+  color: #22c55e;
+}
+
 .dark .signup-box {
   background: var(--bg-secondary);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);

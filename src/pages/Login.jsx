@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, CheckCircle, AlertCircle, X } from 'lucide-react';
 import '../css/login.css';
@@ -23,6 +23,16 @@ export default function Login() {
   const [forgotEmail, setForgotEmail] = useState('');
   const [resetSent, setResetSent] = useState(false);
   const navigate = useNavigate();
+
+  // Load remembered email on mount
+  useEffect(() => {
+    const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
+    const savedEmail = localStorage.getItem('rememberEmail');
+    if (savedRememberMe && savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleGoogleSignIn = async () => {
     setError('');

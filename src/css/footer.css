@@ -5,7 +5,8 @@
 }
 
 .dark .footer-root {
-  border-top: none;
+  border-top: 1px solid var(--border-color, #475569);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
 /* Container similar to Tailwind max-w-7xl and padding */

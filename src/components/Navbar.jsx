@@ -23,6 +23,7 @@ export default function Navbar({ onLoginClick = () => {} }) {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const userMenuRef = useRef(null);
+  const mobileMenuRef = useRef(null);
   const location = useLocation();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const { user, logout, isAuthenticated } = useAuth();
@@ -34,11 +35,16 @@ export default function Navbar({ onLoginClick = () => {} }) {
     return (parts[0][0] + (parts[1]?.[0] || parts[0][1] || '')).toUpperCase();
   };
 
-  // Close user menu when clicking outside
+  // Close user menu and mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
         setShowUserMenu(false);
+      }
+      // Close mobile menu when clicking outside (but not on the toggle button)
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target) && 
+          !e.target.closest('.navbar-toggle')) {
+        setIsMobileMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -124,16 +130,17 @@ export default function Navbar({ onLoginClick = () => {} }) {
                       <Calendar size={16} />
                       <span>My Calendar</span>
                     </Link>
-                    <button
+                    <Link
+                      to="/saved-items"
                       onClick={() => {
                         setShowUserMenu(false);
+                        // Navigate to profile settings (placeholder - uses saved items for now)
                       }}
                       className="user-menu-item"
-                      type="button"
                     >
                       <Settings size={16} />
                       <span>Profile Settings</span>
-                    </button>
+                    </Link>
                     <button
                       onClick={async () => {
                         setIsLoggingOut(true);
@@ -174,7 +181,7 @@ export default function Navbar({ onLoginClick = () => {} }) {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="navbar-mobile">
+          <div className="navbar-mobile" ref={mobileMenuRef}>
             {navLinks.map((link) => (
               <Link
                 key={link.label}
@@ -209,17 +216,17 @@ export default function Navbar({ onLoginClick = () => {} }) {
                       <div className="user-menu-header">
                         <span className="user-email-label">{user?.email}</span>
                       </div>
-                      <button
+                      <Link
+                        to="/saved-items"
                         onClick={() => {
                           setShowUserMenu(false);
                           setIsMobileMenuOpen(false);
                         }}
                         className="user-menu-item"
-                        type="button"
                       >
                         <Settings size={16} />
                         <span>Profile Settings</span>
-                      </button>
+                      </Link>
                       <hr className="user-menu-divider" />
                       <button
                         onClick={async () => {
