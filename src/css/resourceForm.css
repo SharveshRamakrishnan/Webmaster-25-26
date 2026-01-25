@@ -132,37 +132,8 @@
   background: var(--bg-primary, #ffffff);
 }
 
-/* Envelope Fold Animation */
-@keyframes envelopeFold {
-  0% {
-    /* Start: normal form */
-    transform: perspective(1200px) rotateX(0deg) rotateY(0deg) scaleY(1) scaleX(1);
-    opacity: 1;
-  }
-  25% {
-    /* First fold: top half folds down */
-    transform: perspective(1200px) rotateX(45deg) rotateY(0deg) scaleY(0.7) scaleX(1);
-    opacity: 1;
-  }
-  50% {
-    /* Second fold: sides fold in to create envelope width */
-    transform: perspective(1200px) rotateX(60deg) rotateY(0deg) scaleY(0.5) scaleX(0.6);
-    opacity: 1;
-  }
-  75% {
-    /* Envelope formed, starts moving right */
-    transform: perspective(1200px) rotateX(70deg) rotateY(15deg) scaleY(0.4) scaleX(0.5) translateX(100px);
-    opacity: 0.95;
-  }
-  100% {
-    /* Envelope slides off screen to the right */
-    transform: perspective(1200px) rotateX(75deg) rotateY(25deg) scaleY(0.3) scaleX(0.3) translateX(800px);
-    opacity: 0;
-  }
-}
 
 .resource-form--submitted {
-  animation: envelopeFold 2.5s cubic-bezier(0.36, 0, 0.66, -0.56) forwards;
   transform-origin: center center;
 }
 

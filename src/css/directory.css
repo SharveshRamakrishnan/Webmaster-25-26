@@ -398,6 +398,10 @@
   animation: slideInUp 0.6s ease-out 0.3s backwards;
 }
 
+.dark .collapsible{
+  background-color: transparent !important;
+}
+
 .collapsible svg {
   transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: inline-block;

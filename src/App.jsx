@@ -76,7 +76,7 @@ export default function App() {
                 <Route path="/events" element={<Events />} />
                 <Route path="/calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/submit-resource" element={<ProtectedRoute><SubmitResource /></ProtectedRoute>} />
+                <Route path="/submit-resource" element={<SubmitResource />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/about" element={<About />} />

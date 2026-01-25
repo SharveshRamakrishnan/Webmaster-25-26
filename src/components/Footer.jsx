@@ -4,10 +4,6 @@ import { Mail, Phone, MapPin, Facebook, Twitter, Instagram } from 'lucide-react'
 import '../css/footer.css';
 
 export default function Footer() {
-  const openMap = () => {
-    window.open('https://www.google.com/maps/search/Coppell,+TX', '_blank');
-  };
-
   return (
     <footer id="contact" className="footer-root">
       <div className="footer-container">
@@ -39,9 +35,7 @@ export default function Footer() {
               <li>
                 <Link to="/submit-resource" className="footer-link">Submit a Resource</Link>
               </li>
-              <li>
-                <button onClick={openMap} className="footer-link footer-link-btn">View Map</button>
-              </li>
+                <a href="https://www.google.com/maps/search/Coppell,+TX" className="footer-link" target="_blank" rel="noopener noreferrer">View Map</a>
             </ul>
           </div>
 

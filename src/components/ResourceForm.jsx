@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../css/resourceForm.css';
 import { db } from '../config/firebase';
 import{collection, addDoc, serverTimestamp} from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 
 // Validation helper functions
 const validateUrl = (url) => {
@@ -83,13 +84,19 @@ export default function ResourceForm(){
         website: sanitizeInput(formData.website),
         category: formData.category,
         description: sanitizeInput(formData.description),
-        timestamp: serverTimestamp()
+        timestamp: Timestamp.now()
       });
       setFormData({firstName: '', lastName: '', resourceName: '', website: '', category: '', description: ''});
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
-    } catch {
-      setError('Failed to submit resource. Please try again.');
+    } catch (error){
+      if(error.code == 'permission-denied'){
+        setError("Please login to submit a resource.")
+      }
+
+      else{
+        setError('Failed to submit resource. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
