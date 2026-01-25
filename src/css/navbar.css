@@ -665,3 +665,155 @@
     transform: rotate(360deg);
   }
 }
+
+/* Logout Confirmation Modal */
+.navbar-logout-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeInModal 0.2s ease-out;
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.navbar-logout-modal {
+  background: var(--card-bg, #ffffff);
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+  animation: slideUpModal 0.3s ease-out;
+  overflow: hidden;
+}
+
+.dark-mode .navbar-logout-modal {
+  background: var(--card-bg, #1e1e1e);
+}
+
+@keyframes slideUpModal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navbar-logout-modal .modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color, #e0e0e0);
+}
+
+.dark-mode .navbar-logout-modal .modal-header {
+  border-bottom-color: var(--border-color, #333);
+}
+
+.navbar-logout-modal .modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary, #333);
+}
+
+.dark-mode .navbar-logout-modal .modal-header h3 {
+  color: var(--text-primary, #fff);
+}
+
+.navbar-logout-modal .modal-body {
+  padding: 1.5rem;
+}
+
+.navbar-logout-modal .modal-body p {
+  margin: 0.5rem 0;
+  color: var(--text-secondary, #666);
+  font-size: 15px;
+}
+
+.dark-mode .navbar-logout-modal .modal-body p {
+  color: var(--text-secondary, #aaa);
+}
+
+.navbar-logout-modal .modal-subtext {
+  font-size: 13px !important;
+  color: var(--text-secondary, #999) !important;
+  margin-top: 0.75rem !important;
+}
+
+.dark-mode .navbar-logout-modal .modal-subtext {
+  color: var(--text-secondary, #888) !important;
+}
+
+.navbar-logout-modal .modal-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-color, #e0e0e0);
+  justify-content: flex-end;
+}
+
+.dark-mode .navbar-logout-modal .modal-actions {
+  border-top-color: var(--border-color, #333);
+}
+
+.modal-btn-cancel,
+.modal-btn-logout {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-btn-cancel {
+  background: var(--btn-bg-secondary, #f0f0f0);
+  color: var(--text-primary, #333);
+  border: 1px solid var(--border-color, #d0d0d0);
+}
+
+.dark-mode .modal-btn-cancel {
+  background: var(--btn-bg-secondary, #2a2a2a);
+  color: var(--text-primary, #fff);
+  border-color: var(--border-color, #444);
+}
+
+.modal-btn-cancel:hover:not(:disabled) {
+  background: var(--btn-bg-secondary-hover, #e0e0e0);
+}
+
+.dark-mode .modal-btn-cancel:hover:not(:disabled) {
+  background: var(--btn-bg-secondary-hover, #3a3a3a);
+}
+
+.modal-btn-logout {
+  background: #ef4444;
+  color: white;
+}
+
+.modal-btn-logout:hover:not(:disabled) {
+  background: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.modal-btn-cancel:disabled,
+.modal-btn-logout:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

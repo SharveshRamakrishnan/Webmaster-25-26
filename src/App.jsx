@@ -29,6 +29,7 @@ const About = lazy(() => import('./pages/About'));
 const Forum = lazy(() => import('./pages/Forum'));
 const ForumTopicDetail = lazy(() => import('./pages/ForumTopicDetail'));
 const NewForumTopic = lazy(() => import('./pages/NewForumTopic'));
+const UserProfile = lazy(() => import('./pages/UserProfile'));
 
 // Loading fallback component with spinner
 const PageLoader = () => (
@@ -85,6 +86,7 @@ export default function App() {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/write" element={<ProtectedRoute><WriteBlog /></ProtectedRoute>} />
                 <Route path="/blog/:id" element={<BlogDetail />} />
+                <Route path="/profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
               </Routes>
             </Suspense>
           </main>

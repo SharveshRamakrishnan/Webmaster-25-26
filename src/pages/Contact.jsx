@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, X } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import '../css/pages.css';
 import '../css/contact.css';
 import { db } from '../../build/auth';
@@ -94,7 +94,7 @@ export default function Contact() {
         message: ''
       });
       // Success message stays visible until user clicks to send another
-    } catch (err) {
+    } catch {
       setError('Failed to send message. Please try again later.');
     } finally {
       setLoading(false);
@@ -105,7 +105,7 @@ export default function Contact() {
     <div className="page-container">
       <div className="contact-hero">
         <h1>Contact Us</h1>
-        <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+        <p>We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.</p>
       </div>
 
       <div className="contact-content">
@@ -134,7 +134,7 @@ export default function Contact() {
             <div className="contact-success">
               <CheckCircle size={64} className="success-icon" />
               <h2>Message Sent!</h2>
-              <p>Thank you for reaching out. We've received your message and will get back to you soon.</p>
+              <p>Thank you for reaching out. We&apos;ve received your message and will get back to you soon.</p>
               <button 
                 onClick={handleSendAnother}
                 className="contact-submit-btn send-another-btn"

@@ -69,7 +69,7 @@ export default function Signup() {
         }
 
         try{
-            const user = await createUserWithEmailAndPassword(auth, email, password);
+            await createUserWithEmailAndPassword(auth, email, password);
             setLoading(false);
             // Redirect to login after successful signup
             setTimeout(() => {
@@ -99,7 +99,7 @@ export default function Signup() {
         setLoading(true);
         
         try {
-            const result = await signInWithPopup(auth, googleProvider);
+            await signInWithPopup(auth, googleProvider);
             setLoading(false);
             
             // Redirect to home after successful Google signup

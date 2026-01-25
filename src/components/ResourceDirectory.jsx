@@ -114,6 +114,17 @@ export default function ResourceDirectory() {
     return categoryIcons[categoryValue] || MapPin;
   };
 
+  // Calculate category counts
+  const categoryCounts = categoryOptions.reduce((acc, cat) => {
+    if (cat === 'All') {
+      acc[cat] = resources.length;
+    } else {
+      const catValue = categoryMap[cat];
+      acc[cat] = resources.filter(r => r.category === catValue).length;
+    }
+    return acc;
+  }, {});
+
   return (
     <>
       <section id="directory" className="directory-section">
@@ -130,6 +141,7 @@ export default function ResourceDirectory() {
             categories={categoryOptions}
             selected={selectedCategory}
             onChange={setSelectedCategory}
+            counts={categoryCounts}
           />
 
           {/* Sort Dropdown */}

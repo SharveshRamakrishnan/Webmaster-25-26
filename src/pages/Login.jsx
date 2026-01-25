@@ -39,7 +39,7 @@ export default function Login() {
     setLoading(true);
     
     try {
-      const result = await signInWithPopup(auth, googleProvider);
+      await signInWithPopup(auth, googleProvider);
       
       // Save remember me preference
       if (rememberMe) {
@@ -126,7 +126,7 @@ export default function Login() {
 
     try {
       // Attempt Firebase login
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       
       // Save remember me preference
       if (rememberMe) {
@@ -170,7 +170,7 @@ export default function Login() {
           <div className="success-overlay">
             <CheckCircle size={64} className="success-icon" />
             <h2 className="success-title">Welcome!</h2>
-            <p className="success-message">You've successfully logged in</p>
+            <p className="success-message">You&apos;ve successfully logged in</p>
           </div>
         ) : (
           <>
@@ -297,7 +297,7 @@ export default function Login() {
               <div className="forgot-success-message">
                 <CheckCircle size={48} className="success-icon" />
                 <h3>Check Your Email</h3>
-                <p>We've sent a password reset link to <strong>{forgotEmail}</strong></p>
+                <p>We&apos;ve sent a password reset link to <strong>{forgotEmail}</strong></p>
                 <p className="forgot-subtitle">Follow the link in your email to reset your password</p>
               </div>
             ) : (
@@ -325,7 +325,7 @@ export default function Login() {
                 </div>
 
                 <p className="forgot-subtitle">
-                  We'll send you an email with instructions to reset your password.
+                  We&apos;ll send you an email with instructions to reset your password.
                 </p>
 
                 <button

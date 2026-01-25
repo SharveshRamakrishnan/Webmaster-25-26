@@ -178,6 +178,16 @@ export default function Blog() {
   const featuredPosts = filteredPosts.filter(post => post.featured);
   const regularPosts = filteredPosts;
 
+  // Calculate category counts
+  const categoryCounts = categories.reduce((acc, cat) => {
+    if (cat === 'All') {
+      acc[cat] = blogPosts.length;
+    } else {
+      acc[cat] = blogPosts.filter(p => p.category === cat).length;
+    }
+    return acc;
+  }, {});
+
   const handleCreatePost = () => {
     if (!isAuthenticated) {
       alert('Please log in to create a blog post');
@@ -279,6 +289,7 @@ export default function Blog() {
           categories={categories}
           selected={selectedCategory}
           onChange={setSelectedCategory}
+          counts={categoryCounts}
         />
 
 

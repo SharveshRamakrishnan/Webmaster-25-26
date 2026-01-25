@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, Clock, MapPin, Users, Bookmark, Heart, SearchX } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, Heart, SearchX } from 'lucide-react';
 import PageHero from '../components/PageHero';
 import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
@@ -213,7 +213,7 @@ export default function Events() {
               <SearchX size={40} />
             </div>
             <h3>No Events Found</h3>
-            <p>We couldn't find any events matching your criteria. Try adjusting your filters or search term.</p>
+            <p>We couldn&apos;t find any events matching your criteria. Try adjusting your filters or search term.</p>
             <button className="events-no-results-btn" onClick={clearFilters}>
               Clear All Filters
             </button>

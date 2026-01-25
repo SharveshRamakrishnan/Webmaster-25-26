@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, LogIn, Moon, Sun, LogOut, Settings, Bookmark, Calendar } from 'lucide-react';
 import { useDarkMode } from '../context/DarkModeContext';
 import { useAuth } from '../context/AuthContext';
@@ -22,9 +22,11 @@ export default function Navbar({ onLoginClick = () => {} }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const userMenuRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const { user, logout, isAuthenticated } = useAuth();
 
@@ -115,6 +117,14 @@ export default function Navbar({ onLoginClick = () => {} }) {
                       <span className="user-email-label">{user?.email}</span>
                     </div>
                     <Link
+                      to="/profile"
+                      onClick={() => setShowUserMenu(false)}
+                      className="user-menu-item"
+                    >
+                      <Settings size={16} />
+                      <span>My Profile</span>
+                    </Link>
+                    <Link
                       to="/saved-items"
                       onClick={() => setShowUserMenu(false)}
                       className="user-menu-item"
@@ -130,25 +140,10 @@ export default function Navbar({ onLoginClick = () => {} }) {
                       <Calendar size={16} />
                       <span>My Calendar</span>
                     </Link>
-                    <Link
-                      to="/saved-items"
+                    <button
                       onClick={() => {
                         setShowUserMenu(false);
-                        // Navigate to profile settings (placeholder - uses saved items for now)
-                      }}
-                      className="user-menu-item"
-                    >
-                      <Settings size={16} />
-                      <span>Profile Settings</span>
-                    </Link>
-                    <button
-                      onClick={async () => {
-                        setIsLoggingOut(true);
-                        await new Promise(resolve => setTimeout(resolve, 500));
-                        await logout();
-                        setShowUserMenu(false);
-                        setIsLoggingOut(false);
-                        window.location.href = '/';
+                        setShowLogoutConfirm(true);
                       }}
                       className="user-menu-item logout"
                       type="button"
@@ -217,7 +212,7 @@ export default function Navbar({ onLoginClick = () => {} }) {
                         <span className="user-email-label">{user?.email}</span>
                       </div>
                       <Link
-                        to="/saved-items"
+                        to="/profile"
                         onClick={() => {
                           setShowUserMenu(false);
                           setIsMobileMenuOpen(false);
@@ -225,18 +220,36 @@ export default function Navbar({ onLoginClick = () => {} }) {
                         className="user-menu-item"
                       >
                         <Settings size={16} />
-                        <span>Profile Settings</span>
+                        <span>My Profile</span>
+                      </Link>
+                      <Link
+                        to="/saved-items"
+                        onClick={() => {
+                          setShowUserMenu(false);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="user-menu-item"
+                      >
+                        <Bookmark size={16} />
+                        <span>My Saved Items</span>
+                      </Link>
+                      <Link
+                        to="/calendar"
+                        onClick={() => {
+                          setShowUserMenu(false);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="user-menu-item"
+                      >
+                        <Calendar size={16} />
+                        <span>My Calendar</span>
                       </Link>
                       <hr className="user-menu-divider" />
                       <button
-                        onClick={async () => {
-                          setIsLoggingOut(true);
-                          await new Promise(resolve => setTimeout(resolve, 500));
-                          await logout();
+                        onClick={() => {
                           setShowUserMenu(false);
                           setIsMobileMenuOpen(false);
-                          setIsLoggingOut(false);
-                          window.location.href = '/';
+                          setShowLogoutConfirm(true);
                         }}
                         className="user-menu-item logout"
                         type="button"
@@ -260,6 +273,45 @@ export default function Navbar({ onLoginClick = () => {} }) {
                   Login
                 </button>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Logout Confirmation Modal */}
+        {showLogoutConfirm && (
+          <div className="navbar-logout-modal-overlay">
+            <div className="navbar-logout-modal">
+              <div className="modal-header">
+                <h3>Confirm Logout</h3>
+              </div>
+              <div className="modal-body">
+                <p>Are you sure you want to logout?</p>
+                <p className="modal-subtext">You will need to log in again to access your personalized features.</p>
+              </div>
+              <div className="modal-actions">
+                <button
+                  onClick={() => setShowLogoutConfirm(false)}
+                  className="modal-btn-cancel"
+                  disabled={isLoggingOut}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={async () => {
+                    setIsLoggingOut(true);
+                    try {
+                      await logout();
+                      navigate('/');
+                    } catch {
+                      // Error handled in context
+                    }
+                  }}
+                  className="modal-btn-logout"
+                  disabled={isLoggingOut}
+                >
+                  {isLoggingOut ? 'Logging out...' : 'Logout'}
+                </button>
+              </div>
             </div>
           </div>
         )}
