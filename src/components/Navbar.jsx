@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, LogIn, Moon, Sun, LogOut, Settings, Bookmark, Calendar } from 'lucide-react';
+import { Menu, X, LogIn, Moon, Sun, LogOut, Settings, Bookmark, Calendar, Shield } from 'lucide-react';
 import { useDarkMode } from '../context/DarkModeContext';
 import { useAuth } from '../context/AuthContext';
 import '../css/navbar.css';
@@ -23,6 +23,7 @@ export default function Navbar({ onLoginClick = () => {} }) {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const userMenuRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const location = useLocation();
@@ -36,6 +37,19 @@ export default function Navbar({ onLoginClick = () => {} }) {
     const parts = user.email.split('@')[0].split('.');
     return (parts[0][0] + (parts[1]?.[0] || parts[0][1] || '')).toUpperCase();
   };
+
+  // Check if user is admin
+  useEffect(() => {
+    if (user) {
+      user.getIdTokenResult().then((idTokenResult) => {
+        setIsAdmin(idTokenResult.claims.admin === true);
+      }).catch(() => {
+        setIsAdmin(false);
+      });
+    } else {
+      setIsAdmin(false);
+    }
+  }, [user]);
 
   // Close user menu and mobile menu when clicking outside
   useEffect(() => {
@@ -140,6 +154,16 @@ export default function Navbar({ onLoginClick = () => {} }) {
                       <Calendar size={16} />
                       <span>My Calendar</span>
                     </Link>
+                    {isAdmin && (
+                      <Link
+                        to="/admin/resources"
+                        onClick={() => setShowUserMenu(false)}
+                        className="user-menu-item admin-link"
+                      >
+                        <Shield size={16} />
+                        <span>Admin Dashboard</span>
+                      </Link>
+                    )}
                     <button
                       onClick={() => {
                         setShowUserMenu(false);
@@ -244,6 +268,19 @@ export default function Navbar({ onLoginClick = () => {} }) {
                         <Calendar size={16} />
                         <span>My Calendar</span>
                       </Link>
+                      {isAdmin && (
+                        <Link
+                          to="/admin/resources"
+                          onClick={() => {
+                            setShowUserMenu(false);
+                            setIsMobileMenuOpen(false);
+                          }}
+                          className="user-menu-item admin-link"
+                        >
+                          <Shield size={16} />
+                          <span>Admin Dashboard</span>
+                        </Link>
+                      )}
                       <hr className="user-menu-divider" />
                       <button
                         onClick={() => {
@@ -301,9 +338,11 @@ export default function Navbar({ onLoginClick = () => {} }) {
                     setIsLoggingOut(true);
                     try {
                       await logout();
+                      setShowLogoutConfirm(false);
+                      setShowUserMenu(false);
                       navigate('/');
                     } catch {
-                      // Error handled in context
+                      setIsLoggingOut(false);
                     }
                   }}
                   className="modal-btn-logout"

@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import EventCard from './EventCard';
+import { SkeletonGrid } from './SkeletonLoaders';
 import '../css/eventsGrid.css';
 
-export default function EventsGrid({ events }) {
+export default function EventsGrid({ events, isLoading = false }) {
+  if (isLoading) {
+    return <SkeletonGrid count={6} />;
+  }
+
   if (events.length === 0) {
     return (
       <div className="events-no-results">
@@ -25,4 +30,5 @@ EventsGrid.propTypes = {
   events: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
   })).isRequired,
+  isLoading: PropTypes.bool,
 };
