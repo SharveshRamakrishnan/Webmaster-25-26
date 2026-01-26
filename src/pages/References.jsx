@@ -59,15 +59,14 @@ export default function References() {
   ];
 
   return (
-    <div className="references-background">
-      <div className="page-container">
-        <section className="page-hero">
-          <h1>References</h1>
-          <p>Sources and documentation for the Coppell Community Hub project.</p>
-        </section>
-        
-        <section className="page-content">
-          <div className="content-wrapper">
+    <div className="page-container">
+      <section className="page-hero">
+        <h1>References</h1>
+        <p>Sources and documentation for the Coppell Community Hub project.</p>
+      </section>
+      
+      <section className="page-content">
+        <div className="content-wrapper">
           
           <div style={{ marginBottom: '48px' }}>
             <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
@@ -139,18 +138,41 @@ export default function References() {
               {documents.map((doc, index) => (
                 <div 
                   key={index}
-                  className="reference-card"
+                  style={{
+                    padding: '20px',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '8px',
+                    backgroundColor: '#fafafa',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#28a745';
+                    e.currentTarget.style.backgroundColor = '#f0fff4';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = '#e0e0e0';
+                    e.currentTarget.style.backgroundColor = '#fafafa';
+                  }}
                 >
-                  <h3>
+                  <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', color: '#333' }}>
                     {doc.name}
                   </h3>
-                  <p>
+                  <p style={{ margin: '0 0 12px 0', color: '#666', fontSize: '14px' }}>
                     {doc.description}
                   </p>
                   <a 
                     href={`/${doc.filename}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      color: '#28a745',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: '500'
+                    }}
                   >
                     <FileText size={14} />
                     View PDF
@@ -170,18 +192,41 @@ export default function References() {
               {citations.map((cite, index) => (
                 <div 
                   key={index}
-                  className="reference-card"
+                  style={{
+                    padding: '20px',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '8px',
+                    backgroundColor: '#fafafa',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#007bff';
+                    e.currentTarget.style.backgroundColor = '#f0f8ff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = '#e0e0e0';
+                    e.currentTarget.style.backgroundColor = '#fafafa';
+                  }}
                 >
-                  <h3>
+                  <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', color: '#333' }}>
                     {cite.name}
                   </h3>
-                  <p>
+                  <p style={{ margin: '0 0 12px 0', color: '#666', fontSize: '14px' }}>
                     {cite.description}
                   </p>
                   <a 
                     href={cite.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      color: '#007bff',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: '500'
+                    }}
                   >
                     Visit Website
                     <ExternalLink size={14} />
@@ -193,7 +238,6 @@ export default function References() {
 
         </div>
       </section>
-    </div>
     </div>
   );
 }
