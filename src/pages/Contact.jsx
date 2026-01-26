@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Clock, Users} from 'lucide-react';
 import '../css/pages.css';
 import '../css/contact.css';
 import { db } from '../config/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { Timestamp } from "firebase/firestore";
 import { 
   validateName, 
   isValidEmailStrict, 
@@ -27,9 +28,27 @@ export default function Contact() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let formattedValue = value;
+    if(name =="phone"){
+      const digits = value.replace(/\D/g, '');
+
+      if(digits.length === 0){
+        formattedValue = "";
+
+      } else if (digits.length <= 3){
+        formattedValue = `(${digits}`;
+
+      } else if (digits.length <= 6){
+        formattedValue = `(${digits.slice(0,3)}) ${digits.slice(3)}`;
+
+      } else {
+        formattedValue = `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6,10)}`;
+      }
+    }
+
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: formattedValue
     }));
     // Clear error when user starts typing
     if (error) setError('');
@@ -121,7 +140,7 @@ export default function Contact() {
         phone: formattedPhone,
         subject: formData.subject.trim(),
         message: formData.message.trim(),
-        timestamp: serverTimestamp(),
+        timestamp: Timestamp.now(),
         status: 'new',
         read: false
       });
@@ -147,6 +166,27 @@ export default function Contact() {
       <div className="contact-hero">
         <h1>Contact Us</h1>
         <p>We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.</p>
+      </div>
+
+
+      <div className = "contact-stats">
+        <div className="stat-card">
+          <Mail size={32} className="stat-icon" />
+          <h3>1250+ Messages Received</h3>
+          <p>Our community trusts us with their inquiries and feedvback.</p>
+        </div>
+
+        <div className="stat-card">
+          <Clock size={32} className="stat-icon" />
+          <h3>24-Hour Response</h3>
+          <p>We respond within 48 hours of getting your message.</p>
+        </div>
+
+        <div className="stat-card">
+          <Users size={32} className="stat-icon" />
+          <h3>Friendly Support Team</h3>
+          <p>Our team is approachable, helpful, and ready to assist you.</p>
+        </div>
       </div>
 
       <div className="contact-content">
