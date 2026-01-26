@@ -1,9 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram } from 'lucide-react';
 import '../css/footer.css';
 
 export default function Footer() {
+  const navigate = useNavigate();
+
+  const handleSubmitResourceClick = () => {
+    navigate('/');
+    // Scroll to submit resource form after navigation
+    setTimeout(() => {
+      const submitSection = document.getElementById('submit-resource');
+      if (submitSection) {
+        submitSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   return (
     <footer id="contact" className="footer-root">
       <div className="footer-container">
@@ -33,9 +46,20 @@ export default function Footer() {
                 <Link to="/events" className="footer-link">Events</Link>
               </li>
               <li>
-                <Link to="/submit-resource" className="footer-link">Submit a Resource</Link>
+                <Link to="/#submit-resource" className="footer-link" onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/');
+                  setTimeout(() => {
+                    const submitSection = document.getElementById('submit-resource');
+                    if (submitSection) {
+                      submitSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }, 100);
+                }}>Submit a Resource</Link>
               </li>
+              <li>
                 <a href="https://www.google.com/maps/search/Coppell,+TX" className="footer-link" target="_blank" rel="noopener noreferrer">View Map</a>
+              </li>
             </ul>
           </div>
 

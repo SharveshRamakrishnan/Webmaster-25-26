@@ -103,7 +103,7 @@ export default function ResourceForm(){
   };
 
   return(
-    <div className="resource-form-container">
+    <div className="resource-form-container" id="submit-resource">
       <div className={`resource-form ${isSubmitting ? 'resource-form--submitted' : ''}`}>
         <h2 className="resource-form__title">Share a Resource</h2>
         {error && <div className="resource-form__error" style={{color: '#dc2626', padding: '12px', marginBottom: '16px', backgroundColor: '#fee2e2', borderRadius: '8px'}}>{error}</div>}
