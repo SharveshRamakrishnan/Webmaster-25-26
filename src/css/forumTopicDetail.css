@@ -399,6 +399,8 @@
   font-family: inherit;
   resize: vertical;
   transition: border-color 0.2s;
+  background: white;
+  color: #1f2937;
 }
 
 .forum-reply-form textarea:focus {
