@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Search, Filter } from 'lucide-react';
 import '../css/eventFilters.css';
 
-const categories = ['All', 'Community', 'Volunteering', 'Health', 'Education', 'Social', 'Business'];
+const categories = ['All', 'Entertainment', 'Arts & Culture', 'Community', 'Health & Education'];
 
 export default function EventFilters({ selectedCategory, onCategoryChange, searchQuery, onSearchChange }) {
   return (

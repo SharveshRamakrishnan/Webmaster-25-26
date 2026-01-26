@@ -8,14 +8,18 @@ import { useResources } from '../context/ResourceContext';
 import { useAuth } from '../context/AuthContext';
 import events from '../data/events.js';
 import '../css/eventsPage.css';
-import reactLogo from '../assets/react.svg';
 
 const eventData = events;
 
-const categories = ['All', 'Community', 'Volunteering', 'Health', 'Education', 'Social', 'Business'];
+// Dynamically extract unique categories from events
+const getCategories = () => {
+  const uniqueCategories = [...new Set(eventData.map(e => e.category))];
+  return ['All', ...uniqueCategories.sort()];
+};
 
 export default function Events() {
   const navigate = useNavigate();
+  const categories = getCategories();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const { userEvents, toggleUserEvent } = useResources();
@@ -46,8 +50,20 @@ export default function Events() {
   };
 
   const handleRegister = (event) => {
-    // Open registration in new tab (placeholder - can be replaced with modal or actual registration)
-    alert(`Registration for "${event.name}" coming soon! Check back later.`);
+    // Open registration URL in a new tab if available; otherwise show placeholder alert
+    const site = event.website && typeof event.website === 'string' ? event.website.trim() : '';
+    if (!site) {
+      alert(`Registration for "${event.name}" coming soon! Check back later.`);
+      return;
+    }
+
+    const url = site.startsWith('http://') || site.startsWith('https://') ? site : `https://${site}`;
+    try {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } catch (e) {
+      // Fallback to alert if window.open fails
+      alert(`Unable to open the registration page. Please visit: ${url}`);
+    }
   };
 
   const clearFilters = () => {
@@ -90,7 +106,7 @@ export default function Events() {
           {filteredEvents.map((event) => (
             <div key={event.id} className="events-card">
               <div className="events-card-image">
-                <img src={reactLogo} alt={event.name} />
+                <img src={event.image} alt={event.name} />
                 <div className="events-card-category-badge">
                   <span>{event.category}</span>
                 </div>
@@ -121,7 +137,7 @@ export default function Events() {
                     className="events-register-button"
                     onClick={() => handleRegister(event)}
                   >
-                    Register Now
+                    More Info
                   </button>
                   {isAuthenticated && (
                     <button
