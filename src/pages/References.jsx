@@ -44,6 +44,20 @@ export default function References() {
     }
   ];
 
+  const citations = [
+    {
+      name: 'Lucide React',
+      description: 'An open-source icon library used for UI elements',
+      url: 'https://lucide.dev/'
+    },
+
+    {
+      name: 'Unsplash Images',
+      description: 'Source of high-quality, royalty-free images used in the project',
+      url: 'https://unsplash.com/'
+    }
+  ];
+
   return (
     <div className="page-container">
       <section className="page-hero">
@@ -162,6 +176,60 @@ export default function References() {
                   >
                     <FileText size={14} />
                     View PDF
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+              <LinkIcon size={24} />
+              Citations
+            </h2>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {citations.map((cite, index) => (
+                <div 
+                  key={index}
+                  style={{
+                    padding: '20px',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '8px',
+                    backgroundColor: '#fafafa',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#28a745';
+                    e.currentTarget.style.backgroundColor = '#f0fff4';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = '#e0e0e0';
+                    e.currentTarget.style.backgroundColor = '#fafafa';
+                  }}
+                >
+                  <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', color: '#333' }}>
+                    {cite.name}
+                  </h3>
+                  <p style={{ margin: '0 0 12px 0', color: '#666', fontSize: '14px' }}>
+                    {cite.description}
+                  </p>
+                  <a 
+                    href={cite.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      color: '#007bff',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: '500'
+                    }}
+                  >
+                    Visit Website
+                    <ExternalLink size={14} />
                   </a>
                 </div>
               ))}
