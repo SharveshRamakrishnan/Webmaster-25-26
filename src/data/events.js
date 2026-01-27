@@ -1,7 +1,7 @@
 const events = [
   {
     id: 1,
-    name: 'Kaleidoscope: A Celebration of Cultures',
+    name: 'Kaleidoscope: Cultures Celebration',
     date: 'April 4, 2025',
     time: '3:00 PM - 7:00 PM',
     location: 'Old Town Coppell Square',
@@ -27,7 +27,7 @@ const events = [
   },
   {
     id: 3,
-    name: 'Holiday Parade & Tree Lighting',
+    name: 'Holiday Tree Lighting',
     date: 'December 5, 2025',
     time: '6:00 PM',
     location: 'Andrew Brown Park East',
@@ -53,7 +53,7 @@ const events = [
   },
   {
     id: 5,
-    name: 'Music in Old Town: Live Concert Series',
+    name: 'Live Music in Old Town',
     date: 'Spring - Fall 2026 (various Fridays)',
     time: '7:00 PM - 9:00 PM',
     location: 'Old Town Coppell Square',
@@ -66,7 +66,7 @@ const events = [
   },
   {
     id: 6,
-    name: 'Sunset Socials: Movie in the Park',
+    name: 'Sunset Socials: Movie Night',
     date: 'June 13, 2026',
     time: '7:00 PM - 9:30 PM',
     location: 'Andrew Brown Park East',
@@ -79,7 +79,7 @@ const events = [
   },
   {
     id: 7,
-    name: 'Coppell Community Chorale Concerts',
+    name: 'Community Chorale Concerts',
     date: 'Multiple dates throughout season',
     time: 'Afternoon and evening performances',
     location: 'Coppell Arts Center',
@@ -92,7 +92,7 @@ const events = [
   },
   {
     id: 8,
-    name: 'Make & Take Saturday Children\'s Crafts',
+    name: 'Make & Take Children\'s Crafts',
     date: 'First Saturday monthly',
     time: '9:00 AM - 12:00 PM',
     location: 'Coppell Arts Center',
@@ -118,7 +118,7 @@ const events = [
   },
   {
     id: 10,
-    name: 'Back-to-School Community Events',
+    name: 'Back-to-School Fair',
     date: 'Late July - Early August 2026',
     time: 'Times vary',
     location: 'Various Coppell ISD campuses',
@@ -131,7 +131,7 @@ const events = [
   },
   {
     id: 11,
-    name: 'Coppell Senior & Community Center Crafts Fair',
+    name: 'Coppell Senior Center Crafts Fair',
     date: 'November 8, 2025',
     time: '9:00 AM - 12:00 PM',
     location: 'Coppell Senior & Community Center',
@@ -144,7 +144,7 @@ const events = [
   },
   {
     id: 12,
-    name: 'Coppell Arts Center Summer Concerts',
+    name: 'Arts Center Summer Concerts',
     date: 'May - August 2026 (various dates)',
     time: 'Evening performances',
     location: 'Coppell Arts Center',
